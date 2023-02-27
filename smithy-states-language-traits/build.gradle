@@ -1,0 +1,16 @@
+/*
+ * Copyright 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+description = "This module provides the implementation of States Language traits for Smithy."
+
+ext {
+    displayName = "Smithy :: States Language Traits"
+    moduleName = "software.amazon.smithy.stateslanguage.traits"
+}
+
+dependencies {
+    api project(":smithy-utils")
+    api project(":smithy-model")
+}
