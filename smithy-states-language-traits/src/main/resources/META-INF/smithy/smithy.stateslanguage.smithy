@@ -229,3 +229,75 @@ structure StateContext {}
 /// $['store'][0]['book']
 @pattern("^$.*$")
 string StatePath
+
+/// Payload Template
+/// A state machine interpreter dispatches data as input to tasks to do useful work, and receives output back from them. It is frequently desired to reshape input data to meet the format expectations of tasks, and similarly to reshape the output coming back. A JSON object structure called a Payload Template is provided for this purpose.
+/// 
+/// In the Task, Map, Parallel, and Pass States, the Payload Template is the value of a field named "Parameters". In the Task, Map, and Parallel States, there is another Payload Template which is the value of a field named "ResultSelector".
+/// 
+/// A Payload Template MUST be a JSON object; it has no required fields. The interpreter processes the Payload Template as described in this section; the result of that processing is called the payload.
+/// 
+/// To illustrate by example, the Task State has a field named "Parameters" whose value is a Payload Template. Consider the following Task State:
+/// 
+/// "X": {
+///   "Type": "Task",
+///   "Resource": "arn:aws:states:us-east-1:123456789012:task:X",
+///   "Next": "Y",
+///   "Parameters": {
+///     "first": 88,
+///     "second": 99
+///   }
+/// }
+/// In this case, the payload is the object with "first" and "second" fields whose values are respectively 88 and 99. No processing needs to be performed and the payload is identical to the Payload Template.
+/// 
+/// Values from the Payload Template’s input and the Context Object can be inserted into the payload with a combination of a field-naming convention, Paths and Intrinsic Functions.
+/// 
+/// If any field within the Payload Template (however deeply nested) has a name ending with the characters ".$", its value is transformed according to rules below and the field is renamed to strip the ".$" suffix.
+/// 
+/// If the field value begins with only one "$", the value MUST be a Path. In this case, the Path is applied to the Payload Template’s input and is the new field value.
+/// 
+/// If the field value begins with "$$", the first dollar sign is stripped and the remainder MUST be a Path. In this case, the Path is applied to the Context Object and is the new field value.
+/// 
+/// If the field value does not begin with "$", it MUST be an Intrinsic Function (see below). The interpreter invokes the Intrinsic Function and the result is the new field value.
+/// 
+/// If the path is legal but cannot be applied successfully, the interpreter fails the machine execution with an Error Name of "States.ParameterPathFailure". If the Intrinsic Function fails during evaluation, the interpreter fails the machine execution with an Error Name of "States.IntrinsicFailure".
+/// 
+/// A JSON object MUST NOT have duplicate field names after fields ending with the characters ".$" are renamed to strip the ".$" suffix.
+/// 
+/// "X": {
+///   "Type": "Task",
+///   "Resource": "arn:aws:states:us-east-1:123456789012:task:X",
+///   "Next": "Y",
+///   "Parameters": {
+///     "flagged": true,
+///     "parts": {
+///       "first.$": "$.vals[0]",
+///       "last3.$": "$.vals[-3:]"
+///     },
+///     "weekday.$": "$$.DayOfWeek",
+///     "formattedOutput.$": "States.Format('Today is {}', $$.DayOfWeek)"
+///   }
+/// }
+/// Suppose that the input to the P is as follows:
+/// 
+/// {
+///   "flagged": 7,
+///   "vals": [0, 10, 20, 30, 40, 50]
+/// }
+/// Further, suppose that the Context Object is as follows:
+/// 
+/// {
+///   "DayOfWeek": "TUESDAY"
+/// }
+/// In this case, the effective input to the code identified in the "Resource" field would be as follows:
+/// 
+/// {
+///   "flagged": true,
+///   "parts": {
+///     "first": 0,
+///     "last3": [30, 40, 50]
+///   },
+///   "weekday": "TUESDAY",
+///   "formattedOutput": "Today is TUESDAY"
+/// }
+structure StatePayloadTemplate {}
