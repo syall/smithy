@@ -179,9 +179,55 @@ timestamp StateTimestamp
 structure StateUnit {}
 
 
-// The Context Object The interpreter can provide information to an executing
-// state machine about the execution and other implementation details. This is
-// delivered in the form of a JSON object called the "Context Object". This
-// version of the States Language specification does not specify any contents of
-// the Context Object.
+/// The Context Object The interpreter can provide information to an executing
+/// state machine about the execution and other implementation details. This is
+/// delivered in the form of a JSON object called the "Context Object". This
+/// version of the States Language specification does not specify any contents of
+/// the Context Object.
 structure StateContext {}
+
+/// Paths
+/// A Path is a string, beginning with "$", used to identify components
+/// with a JSON text. The syntax is that of JsonPath.
+///
+/// When a Path begins with "$$", two dollar signs, this signals that it is
+/// intended to identify content within the Context Object. The first dollar sign
+/// is stripped, and the remaining text, which begins with a dollar sign, is
+/// interpreted as the JSONPath applying to the Context Object.
+@documentation("""
+Reference Paths
+A Reference Path is a Path with syntax limited in such a way that it can only identify a single node in a JSON structure: The operators "@", ",", ":", and "?" are not supported - all Reference Paths MUST be unambiguous references to a single value, array, or object (subtree).
+
+For example, if state input data contained the values:
+
+{
+    "foo": 123,
+    "bar": ["a", "b", "c"],
+    "car": {
+        "cdr": true
+    }
+}
+Then the following Reference Paths would return:
+
+$.foo => 123
+$.bar => ["a", "b", "c"]
+$.car.cdr => true
+Paths and Reference Paths are used by certain states, as specified later in this document, to control the flow of a state machine or to configure a state's settings or options.
+
+Here are some examples of acceptable Reference Path syntax:
+
+$.store.book
+$.store\.book
+$.\stor\e.boo\k
+$.store.book.title
+$.foo.\.bar
+$.foo\@bar.baz\[\[.\?pretty
+$.&Ж中.\uD800\uDF46
+$.ledgers.branch[0].pending.count
+$.ledgers.branch[0]
+$.ledgers[0][22][315].foo
+$['store']['book']
+$['store'][0]['book']
+""")
+@pattern("^$.*$")
+string StatePath
