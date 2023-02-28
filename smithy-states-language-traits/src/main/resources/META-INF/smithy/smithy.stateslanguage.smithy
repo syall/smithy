@@ -113,6 +113,8 @@ structure stateMixin {
     comment: String
     end: Boolean
     next: String
+    input: StateUnit
+    output: StateUnit
 }
 
 /// The state name, whose length MUST BE less than or equal to 80 Unicode
@@ -129,3 +131,5 @@ string StateName
 /// "2016-03-14T01:59:00Z".
 @timestampFormat("date-time")
 timestamp StateTimestamp
+
+structure StateUnit {}

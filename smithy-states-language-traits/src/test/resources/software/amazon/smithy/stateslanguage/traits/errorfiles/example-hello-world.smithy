@@ -24,7 +24,7 @@ structure ExampleHelloWorld {}
 /// Assuming the Lambda function executes successfully, the machine will
 /// terminate successfully.
 @smithy.stateslanguage#state
-structure HelloWorldTask {
+structure HelloWorldTask with [smithy.stateslanguage#stateMixin] {
     type: String = "Task"
     resource: String = "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld"
     end: Boolean = true
