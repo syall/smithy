@@ -301,3 +301,51 @@ string StatePath
 ///   "formattedOutput": "Today is TUESDAY"
 /// }
 structure StatePayloadTemplate {}
+
+/// Intrinsic Functions
+/// The States Language provides a small number of "Intrinsic Functions", constructs which look like functions in programming languages and can be used to help Payload Templates process the data going to and from Task Resources. See Appendix B for a full list of Intrinsic Functions
+/// 
+/// Here is an example of an an Intrinsic Function named "States.Format" being used to prepare data:
+/// 
+/// "X": {
+///   "Type": "Task",
+///   "Resource": "arn:aws:states:us-east-1:123456789012:task:X",
+///   "Next": "Y",
+///   "Parameters": {
+///     "greeting.$": "States.Format('Welcome to {} {}\\'s playlist.', $.firstName, $.lastName)"
+///   }
+/// }
+/// An Intrinsic Function MUST be a string.
+/// 
+/// The Intrinsic Function MUST begin with an Intrinsic Function name. An Intrinsic Function name MUST contain only the characters A through Z, a through z, 0 through 9, ".", and "_".
+/// 
+/// All Intrinsic Functions defined by this specification have names that begin with "States.". Other implementations may define their own Intrinsic Functions whose names MUST NOT begin with "States.".
+/// 
+/// The Intrinsic Function name MUST be followed immediately by a list of zero or more arguments, enclosed by "(" and ")", and separated by commas.
+/// 
+/// Intrinsic Function arguments may be strings enclosed by apostrophe (') characters, numbers, null, Paths, or nested Intrinsic Functions.
+/// 
+/// The value of a string, number or null argument is the argument itself. The value of an argument which is a Path is the result of applying it to the input of the Payload Template. The value of an argument which is an Intrinsic Function is the result of the function invocation."
+/// 
+/// Note that in the example above, the first argument of States.Format could have been a Path that yielded the formatting template string.
+/// 
+/// The following characters are reserved for all Intrinsic Functions and MUST be escaped: ' { } \
+/// 
+/// If any of the reserved characters needs to appear as part of the value without serving as a reserved character, it MUST be escaped with a backslash.
+/// 
+/// If the character "\" needs to appear as part of the value without serving as an escape character, it MUST be escaped with a backslash.
+/// 
+/// The literal string \' represents '.
+/// The literal string \{ represents {.
+/// The literal string \} represents }.
+/// The literal string \\ represents \.
+/// 
+/// In JSON, all backslashes contained in a string literal value must be escaped with another backslash, therefore, the above will equate to:
+/// 
+/// The escaped string \\' represents '.
+/// The escaped string \\{ represents {.
+/// The escaped string \\} represents }.
+/// The escaped string \\\\ represents \.
+/// 
+/// If an open escape backslash \ is found in the Intrinsic Function, the interpreter will throw a runtime error.
+string StateIntrinsicFunction
