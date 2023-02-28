@@ -132,4 +132,48 @@ string StateName
 @timestampFormat("date-time")
 timestamp StateTimestamp
 
+/// Data / The interpreter passes data between states to perform calculations or
+/// to dynamically control the state machine’s flow. All such data MUST be
+/// expressed in JSON.
+/// 
+/// When a state machine is started, the caller can provide an initial JSON text
+/// as input, which is passed to the machine's start state as input. If no input
+/// is provided, the default is an empty JSON object, {}. As each state is
+/// executed, it receives a JSON text as input and can produce arbitrary output,
+/// which MUST be a JSON text. When two states are linked by a transition, the
+/// output from the first state is passed as input to the second state. The output
+/// from the machine's terminal state is treated as its output.
+/// 
+/// For example, consider a simple state machine that adds two numbers together:
+/// 
+/// {
+///   "StartAt": "Add",
+///   "States": {
+///     "Add": {
+///       "Type": "Task",
+///       "Resource": "arn:aws:lambda:us-east-1:123456789012:function:Add",
+///       "End": true
+///     }
+///   }
+/// }
+///
+/// Suppose the "Add" Lambda function is defined as:
+/// 
+/// exports.handler = function(event, context) { 
+///   context.succeed(event.val1 + event.val2);
+/// };
+/// Then if this state machine was started with the input
+/// { "val1": 3, "val2": 4 }, then the output would be the JSON text consisting
+/// of the number 7.
+/// 
+/// The usual constraints applying to JSON-encoded data apply. In particular,
+/// note that:
+/// 
+/// 1. Numbers in JSON generally conform to JavaScript semantics, typically
+///    corresponding to double-precision IEEE-854 values. For this and other
+///    interoperability concerns, see RFC 8259.
+/// 
+/// 2. Standalone "-delimited strings, booleans, and numbers are valid JSON
+///    texts.
+/// This trait represents the undocumented input / output type between states.
 structure StateUnit {}
