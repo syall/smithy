@@ -62,12 +62,12 @@ map States {
     /// The state name is the field name; state names MUST be unique within the
     /// scope of the whole state machine.
     key: StateName
-    value: stateIdRef
+    value: StateIdRef
 }
 
 /// Reference to a State
 @idRef(failWhenMissing: true, selector: "structure [trait|smithy.stateslanguage#state]")
-string stateIdRef
+string StateIdRef
 
 /// States describe tasks (units of work), or specify flow control (e.g.
 /// Choice).
@@ -109,3 +109,6 @@ structure stateMixin {
 /// characters.
 @length(min: 1, max: 80)
 string StateName
+
+@timestampFormat("date-time")
+timestamp StateTimestamp
