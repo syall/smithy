@@ -26,6 +26,6 @@ structure ExampleHelloWorld {}
 @smithy.stateslanguage#state
 structure HelloWorldTask {
     type: String = "Task"
-    resouce: String = "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld"
+    resource: String = "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld"
     end: Boolean = true
 }
