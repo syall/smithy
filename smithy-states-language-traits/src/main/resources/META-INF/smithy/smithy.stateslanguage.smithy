@@ -95,6 +95,16 @@ structure state {}
 ///    boolean. The term TODO(stateslanguage) "Terminal State" means a state
 ///    with { "End": true }, or a state with { "Type": "Succeed" }, or a state
 ///    with { "Type": "Fail" }.
+/// Transitions link states together, defining the control flow for the state
+/// machine. After executing a non-terminal state, the interpreter follows a
+/// transition to the next state. For most state types, transitions are
+/// unconditional and specified through the state's "Next" field.
+/// 
+/// All non-terminal states MUST have a "Next" field, except for the Choice
+/// State. The value of the "Next" field MUST exactly and case-sensitively
+/// match the name of the another state.
+/// 
+/// States can have multiple incoming transitions from other states.
 @mixin
 @trait(selector: "structure")
 structure stateMixin {
@@ -110,5 +120,12 @@ structure stateMixin {
 @length(min: 1, max: 80)
 string StateName
 
+/// Timestamps
+/// The Choice and Wait States deal with JSON field values which represent
+/// timestamps. These are strings which MUST conform to the RFC3339 profile of
+/// ISO 8601, with the further restrictions that an uppercase "T" character
+/// MUST be used to separate date and time, and an uppercase "Z" character MUST
+//  be present in the absence of a numeric time zone offset, for example
+/// "2016-03-14T01:59:00Z".
 @timestampFormat("date-time")
 timestamp StateTimestamp
