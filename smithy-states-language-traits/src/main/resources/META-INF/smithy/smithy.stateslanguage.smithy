@@ -184,4 +184,4 @@ structure StateUnit {}
 // delivered in the form of a JSON object called the "Context Object". This
 // version of the States Language specification does not specify any contents of
 // the Context Object.
-document StateContext
+structure StateContext {}
