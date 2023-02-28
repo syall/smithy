@@ -80,6 +80,9 @@ string stateIdRef
 ///   "Comment": "Executes the HelloWorld Lambda function"
 /// }
 /// ```
+@trait(selector: "structure")
+structure state {}
+
 /// Note that:
 /// 1. All states MUST have a TODO(stateslanguage) "Type" field. This document
 ///    refers to the values of this field as a state’s type.
@@ -92,8 +95,15 @@ string stateIdRef
 ///    boolean. The term TODO(stateslanguage) "Terminal State" means a state
 ///    with { "End": true }, or a state with { "Type": "Succeed" }, or a state
 ///    with { "Type": "Fail" }.
+@mixin
 @trait(selector: "structure")
-structure state {}
+structure stateMixin {
+    @required
+    type: String
+    comment: String
+    end: Boolean
+    next: String
+}
 
 /// The state name, whose length MUST BE less than or equal to 80 Unicode
 /// characters.
