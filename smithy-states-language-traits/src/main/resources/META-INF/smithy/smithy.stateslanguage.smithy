@@ -177,3 +177,11 @@ timestamp StateTimestamp
 ///    texts.
 /// This trait represents the undocumented input / output type between states.
 structure StateUnit {}
+
+
+// The Context Object The interpreter can provide information to an executing
+// state machine about the execution and other implementation details. This is
+// delivered in the form of a JSON object called the "Context Object". This
+// version of the States Language specification does not specify any contents of
+// the Context Object.
+document StateContext
