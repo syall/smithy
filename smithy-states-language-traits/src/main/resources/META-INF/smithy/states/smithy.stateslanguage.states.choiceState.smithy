@@ -25,11 +25,6 @@ union StateChoiceRule {
 
 structure StateBooleanExpression {
     next: StateName
-    @required
-    booleanExpressionEvaluation: StateBooleanExpressionEvaluation
-}
-
-union StateBooleanExpressionEvaluation {
     and: StateChoiceRuleList
     or: StateChoiceRuleList
     not: StateChoiceRule

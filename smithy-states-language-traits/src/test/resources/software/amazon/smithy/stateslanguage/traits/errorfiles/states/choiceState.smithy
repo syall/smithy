@@ -20,43 +20,37 @@ structure TestStateMachine {}
         {
             booleanExpression: {
                 next: "NextState"
-                booleanExpressionEvaluation: {
-                    not: {
-                        booleanExpression: {
-                            booleanExpressionEvaluation: {
-                                or: [
-                                    {
-                                        dataTestExpression: {
-                                            variable: "$"
-                                            comparisonOperator: "StringEquals"
-                                            comparisonOperatorValue: "TEST"
-                                        }
-                                    }
-                                    {
-                                        booleanExpression: {
-                                            booleanExpressionEvaluation: {
-                                                and: [
-                                                    {
-                                                        dataTestExpression: {
-                                                            variable: "$"
-                                                            comparisonOperator: "NumericEquals"
-                                                            comparisonOperatorValue: 0
-                                                        }
-                                                    }
-                                                    {
-                                                        dataTestExpression: {
-                                                            variable: "$"
-                                                            comparisonOperator: "StringEqualsPath"
-                                                            comparisonOperatorValue: "$"
-                                                        }
-                                                    }
-                                                ]
+                not: {
+                    booleanExpression: {
+                        or: [
+                            {
+                                dataTestExpression: {
+                                    variable: "$"
+                                    comparisonOperator: "StringEquals"
+                                    comparisonOperatorValue: "TEST"
+                                }
+                            }
+                            {
+                                booleanExpression: {
+                                    and: [
+                                        {
+                                            dataTestExpression: {
+                                                variable: "$"
+                                                comparisonOperator: "NumericEquals"
+                                                comparisonOperatorValue: 0
                                             }
                                         }
-                                    }
-                                ]
+                                        {
+                                            dataTestExpression: {
+                                                variable: "$"
+                                                comparisonOperator: "StringEqualsPath"
+                                                comparisonOperatorValue: "$"
+                                            }
+                                        }
+                                    ]
+                                }
                             }
-                        }
+                        ]
                     }
                 }
             }
