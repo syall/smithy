@@ -6,14 +6,14 @@
 package software.amazon.smithy.stateslanguage.converter.fromsmithy;
 
 import software.amazon.smithy.model.node.ObjectNode;
-import software.amazon.smithy.stateslanguage.traits.StateMachineTrait;
+import software.amazon.smithy.model.traits.Trait;
 
-public interface StatesLanguageStateMachineMapper {
+public interface StateMapper {
     default byte getOrder() {
         return 0;
     }
 
-    default ObjectNode updateNode(Context context, StateMachineTrait trait, ObjectNode objectNode) {
+    default ObjectNode updateNode(Context context, Trait trait, ObjectNode objectNode) {
         return objectNode;
     }
 }

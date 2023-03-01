@@ -57,29 +57,48 @@ public final class StatesLanguageConverter {
             // State Machine
             Shape stateMachineShape = model.expectShape(stateMachineEntry.getKey());
             StateMachineTrait stateMachineTrait = stateMachineShape.expectTrait(StateMachineTrait.class);
+            Map<String, Trait> stateMachineStates = stateMachineEntry.getValue();
+            Context context = new Context(model, config, extensions, stateMachineTrait, stateMachineStates);
             ObjectNode stateMachineObjectNode = stateMachineTrait.toNode().expectObjectNode();
-            Context context = new Context(model, config);
-            for (Smithy2StatesLanguageExtension extension : extensions) {
-                for (StatesLanguageStateMachineMapper mapper : extension.getStatesLanguageStateMachineMappers()) {
-                    stateMachineObjectNode = mapper.updateNode(context, stateMachineTrait, stateMachineObjectNode);
-                }
-            }
-            // States
-            ObjectNode stateMachineStatesObjectNode = ObjectNode.builder().build();
-            for (Map.Entry<String, Trait> stateEntry : stateMachineEntry.getValue().entrySet()) {
-                // State
-                ObjectNode stateObjectNode = stateEntry.getValue().toNode().expectObjectNode();
-                for (Smithy2StatesLanguageExtension extension : extensions) {
-                    for (StatesLanguageStateMapper mapper : extension.getStatesLanguageStateMappers()) {
-                        stateObjectNode = mapper.updateNode(null, stateMachineTrait, stateObjectNode);
-                    }
-                }
-                stateMachineStatesObjectNode = stateMachineStatesObjectNode
-                    .withMember(stateEntry.getKey(), stateObjectNode);
-            }
-            stateMachineObjectNode = stateMachineObjectNode.withMember("States", stateMachineStatesObjectNode);
+            stateMachineObjectNode = applyStateMachineMappers(stateMachineObjectNode, context);
             nodes.put(stateMachineEntry.getKey(), stateMachineObjectNode);
         }
         return nodes;
+    }
+
+    public static ObjectNode applyStateMachineMappers(
+        ObjectNode stateMachineObjectNode,
+        Context context
+    ) {
+        for (Smithy2StatesLanguageExtension extension : context.getExtensions()) {
+            for (StateMachineMapper mapper : extension.getStateMachineMappers()) {
+                stateMachineObjectNode = mapper.updateNode(
+                    context,
+                    context.getStateMachineTrait(),
+                    stateMachineObjectNode);
+            }
+        }
+        return stateMachineObjectNode;
+    }
+
+    public static ObjectNode applyStateMappers(
+        ObjectNode stateMachineStatesObjectNode,
+        Context context
+    ) {
+        for (Map.Entry<String, Trait> stateEntry : context.getStateMachineStates().entrySet()) {
+            // State
+            ObjectNode stateObjectNode = stateEntry.getValue().toNode().expectObjectNode();
+            for (Smithy2StatesLanguageExtension extension : context.getExtensions()) {
+                for (StateMapper mapper : extension.getStateMappers()) {
+                    stateObjectNode = mapper.updateNode(
+                        context,
+                        stateEntry.getValue(),
+                        stateObjectNode);
+                }
+            }
+            stateMachineStatesObjectNode = stateMachineStatesObjectNode
+                .withMember(stateEntry.getKey(), stateObjectNode);
+        }
+        return stateMachineStatesObjectNode;
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 import software.amazon.smithy.utils.ListUtils;
 
 public interface Smithy2StatesLanguageExtension {
-    default List<StatesLanguageStateMachineMapper> getStatesLanguageStateMachineMappers() {
+    default List<StateMachineMapper> getStateMachineMappers() {
         return ListUtils.of();
     }
 
-    default List<StatesLanguageStateMapper> getStatesLanguageStateMappers() {
+    default List<StateMapper> getStateMappers() {
         return ListUtils.of();
     }
 }
