@@ -11,8 +11,16 @@ structure waitState {
     @required
     nextOrEnd: StateNextOrEnd
     // State-specific
-    seconds: PositiveInteger
-    secondsPath: StatePath
-    timestamp: StateTimestamp
-    timestampPath: StatePath
+    seconds: SecondsOrStatePath
+    timestamp: TimestampOrStatePath
+}
+
+union SecondsOrStatePath {
+    value: PositiveInteger
+    path: StatePath
+}
+
+union TimestampOrStatePath {
+    value: StateTimestamp
+    path: StatePath
 }

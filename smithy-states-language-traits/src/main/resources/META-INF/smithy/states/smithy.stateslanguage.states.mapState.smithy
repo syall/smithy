@@ -23,12 +23,24 @@ structure mapState {
     itemSelector: StatePayloadTemplate
     itemBatcher: StateItemBatcher
     resultWriter: StateResultWriter
-    maxConcurrency: NonNegativeInteger = 0
-    maxConcurrencyPath: StatePath
-    toleratedFailurePercentage: PercentageInteger
-    toleratedFailurePercentagePath: StatePath
-    toleratedFailureCount: NonNegativeInteger = 0
-    toleratedFailureCountPath: StatePath
+    maxConcurrency: MaxConcurrencyOrStatePath
+    toleratedFailurePercentage: ToleratedFailurePercentageOrStatePath
+    toleratedFailureCount: ToleratedFailureCountOrStatePath
+}
+
+union MaxConcurrencyOrStatePath {
+    value: NonNegativeInteger
+    path: StatePath
+}
+
+union ToleratedFailurePercentageOrStatePath {
+    value: PercentageInteger
+    path: StatePath
+}
+
+union ToleratedFailureCountOrStatePath {
+    value: NonNegativeInteger
+    path: StatePath
 }
 
 structure StateItemReader {
@@ -39,16 +51,28 @@ structure StateItemReader {
 }
 
 structure StateItemReaderConfig {
-    maxItems: PositiveInteger
-    maxItemsPath: StatePath
+    maxItems: MaxItemsOrStatePath
+}
+
+union MaxItemsOrStatePath {
+    value: PositiveInteger
+    path: StatePath
 }
 
 structure StateItemBatcher {
     batchInput: StatePayloadTemplate
-    maxItemsPerBatch: PositiveInteger
-    maxItemsPerBatchPath: StatePath
-    maxInputBytesPerBatch: PositiveInteger
-    maxInputBytesPerBatchPath: StatePath
+    maxItemsPerBatch: MaxItemsPerBatch
+    maxInputBytesPerBatch: MaxInputBytesPerBatch
+}
+
+union MaxItemsPerBatch {
+    value: PositiveInteger
+    path: StatePath
+}
+
+union MaxInputBytesPerBatch {
+    value: PositiveInteger
+    path: StatePath
 }
 
 structure StateResultWriter {

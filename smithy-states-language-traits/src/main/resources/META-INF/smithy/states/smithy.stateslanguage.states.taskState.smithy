@@ -18,9 +18,17 @@ structure taskState {
     // State-specific
     @required
     resource: StateURI
-    timeoutSeconds: PositiveInteger = 60
-    heartbeatSeconds: PositiveInteger
-    timeoutSecondsPath: StatePath
-    heartbeatSecondsPath: StatePath
+    timeoutSeconds: TimeoutSecondsOrStatePath
+    heartbeatSeconds: HeartbeatSecondsOrStatePath
     credentials: StatePayloadTemplate
+}
+
+union TimeoutSecondsOrStatePath {
+    value: PositiveInteger
+    path: StatePath
+}
+
+union HeartbeatSecondsOrStatePath {
+    value: PositiveInteger
+    path: StatePath
 }
