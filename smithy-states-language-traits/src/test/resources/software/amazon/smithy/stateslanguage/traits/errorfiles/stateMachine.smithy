@@ -3,12 +3,11 @@ $version: "2.0"
 namespace smithy.stateMachine.example
 
 @smithy.stateslanguage#state
-structure NoopState {
-    @required
-    type: String = "Pass"
-    comment: String = "No operation"
-    end: Boolean = true
-}
+@smithy.stateslanguage#passState(
+    comment: "No operation"
+    nextOrEnd: { end: true }
+)
+structure NoopState {}
 
 @smithy.stateslanguage#stateMachine(
     states: {

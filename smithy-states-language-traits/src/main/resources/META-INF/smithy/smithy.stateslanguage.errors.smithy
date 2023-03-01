@@ -2,64 +2,6 @@ $version: "2.0"
 
 namespace smithy.stateslanguage
 
-@externalDocumentation(
-    "Amazon States Language Specification": "https://states-language.net/spec.html"
-)
-@trait(selector: "structure")
-structure stateMachine {
-    @required
-    @length(min: 1)
-    states: States
-
-    @required
-    startAt: StateName
-
-    comment: String
-    version: String = "1.0"
-
-    timeoutSeconds: Integer
-}
-
-map States {
-    key: StateName
-    value: StateIdRef
-}
-
-@idRef(failWhenMissing: true, selector: "structure [trait|smithy.stateslanguage#state]")
-string StateIdRef
-
-@trait(selector: "structure")
-structure state {}
-
-@mixin
-@trait(selector: "structure")
-structure stateMixin {
-    @required
-    type: String
-    comment: String
-    end: Boolean
-    next: StateName
-    input: StateUnit
-    output: StateUnit
-    inputPath: StatePath
-    parameters: StateUnit
-    resultSelector: StateUnit
-    resultPath: StatePath
-    outputPath: StatePath
-    retry: StateRetry
-    catch: StateCatch
-}
-
-@length(min: 1, max: 80)
-string StateName
-
-string StatePath
-
-@timestampFormat("date-time")
-timestamp StateTimestamp
-
-structure StateUnit {}
-
 list StateRetry {
     member: StateRetrier
 }
@@ -67,12 +9,21 @@ list StateRetry {
 structure StateRetrier {
     @required
     errorEquals: StateErrorList
-    @range(min: 1)
-    intervalSeconds: Integer = 1
-    @range(min: 0)
-    maxAttempts: Integer = 3
-    @range(min: 1.0)
-    backoffRate: Float = 2.0
+    intervalSeconds: PositiveInteger = 1
+    maxAttempts: NonNegativeInteger = 3
+    backoffRate: PositiveFloatGreaterThan1 = 2.0
+}
+
+list StateCatch {
+    member: StateCatcher
+}
+
+structure StateCatcher {
+    @required
+    errorEquals: StateErrorList
+    @required
+    next: StateName
+    resultPath: StatePath
 }
 
 @length(min: 1)
@@ -119,16 +70,4 @@ enum StateError {
 
     /// A Map state failed to write all results as specified by the “ResultWriter” field.
     STATES_RESULTWRITERFAILED= "States.ResultWriterFailed"
-}
-
-list StateCatch {
-    member: StateCatcher
-}
-
-structure StateCatcher {
-    @required
-    errorEquals: StateErrorList
-    @required
-    next: StateName
-    resultPath: StatePath
 }

@@ -1,1 +1,10 @@
-smithy.stateslanguage.smithy
+smithy.stateslanguage.api.smithy
+smithy.stateslanguage.errors.smithy
+states/smithy.stateslanguage.states.choiceState.smithy
+states/smithy.stateslanguage.states.failState.smithy
+states/smithy.stateslanguage.states.mapState.smithy
+states/smithy.stateslanguage.states.parallelState.smithy
+states/smithy.stateslanguage.states.passState.smithy
+states/smithy.stateslanguage.states.succeedState.smithy
+states/smithy.stateslanguage.states.taskState.smithy
+states/smithy.stateslanguage.states.waitState.smithy

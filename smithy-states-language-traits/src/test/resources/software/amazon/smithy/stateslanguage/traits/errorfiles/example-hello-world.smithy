@@ -12,7 +12,7 @@ namespace example.hello.world
     comment: "A simple minimal example of the States language"
     startAt: "Hello World"
     states: {
-        "Hello World": HelloWorldTask
+        "Hello World": HelloWorldState
     }
 )
 structure ExampleHelloWorld {}
@@ -24,8 +24,8 @@ structure ExampleHelloWorld {}
 /// Assuming the Lambda function executes successfully, the machine will
 /// terminate successfully.
 @smithy.stateslanguage#state
-structure HelloWorldTask with [smithy.stateslanguage#stateMixin] {
-    type: String = "Task"
-    resource: String = "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld"
-    end: Boolean = true
-}
+@smithy.stateslanguage#taskState(
+    resource: "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld"
+    nextOrEnd: { end: true }
+)
+structure HelloWorldState {}
