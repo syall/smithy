@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import software.amazon.smithy.model.Model;
 import software.amazon.smithy.model.knowledge.KnowledgeIndex;
-import software.amazon.smithy.model.node.ObjectNode;
 import software.amazon.smithy.model.shapes.Shape;
 import software.amazon.smithy.model.shapes.ShapeId;
 import software.amazon.smithy.model.traits.Trait;
@@ -18,13 +17,13 @@ import software.amazon.smithy.stateslanguage.traits.StateTrait;
 
 public final class StateMachineIndex implements KnowledgeIndex {
 
-    private final Map<ShapeId, Map<String, ObjectNode>> stateMachineStates = new HashMap<>();
+    private final Map<ShapeId, Map<String, Trait>> stateMachineStates = new HashMap<>();
 
     public StateMachineIndex(Model model) {
         model.getShapesWithTrait(StateMachineTrait.class).forEach(shape -> {
             StateMachineTrait stateMachineTrait = shape.expectTrait(StateMachineTrait.class);
             stateMachineStates.putIfAbsent(shape.getId(), new HashMap<>());
-            Map<String, ObjectNode> stateMachineMap = stateMachineStates.get(shape.getId());
+            Map<String, Trait> stateMachineMap = stateMachineStates.get(shape.getId());
             if (stateMachineMap == null) {
                 throw new IllegalStateException(
                     "State Machine `" + shape.getId() + "` should be in the State Machine Index");
@@ -44,7 +43,7 @@ public final class StateMachineIndex implements KnowledgeIndex {
                         .orElseThrow(() -> new RuntimeException(
                             "Could not find associated state definition `"
                             + stateDefinition + "` on state `" + shapeId + "`"));
-                stateMachineMap.put(stateName, stateDefinitionTrait.toNode().expectObjectNode());
+                stateMachineMap.put(stateName, stateDefinitionTrait);
             });
         });
     }
@@ -53,7 +52,7 @@ public final class StateMachineIndex implements KnowledgeIndex {
         return model.getKnowledge(StateMachineIndex.class, StateMachineIndex::new);
     }
 
-    public Map<ShapeId, Map<String, ObjectNode>> getStateMachineStates() {
+    public Map<ShapeId, Map<String, Trait>> getStateMachineStates() {
         return stateMachineStates;
     }
 }
