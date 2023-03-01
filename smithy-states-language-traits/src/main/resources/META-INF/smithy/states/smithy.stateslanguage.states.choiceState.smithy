@@ -5,7 +5,6 @@ namespace smithy.stateslanguage
 @trait
 @stateDefinition
 structure choiceState {
-    type: String = "Choice"
     comment: String
     inputPath: StatePath
     outputPath: StatePath

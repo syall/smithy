@@ -5,7 +5,6 @@ namespace smithy.stateslanguage
 @trait
 @stateDefinition
 structure mapState {
-    type: String = "Map"
     comment: String
     inputPath: StatePath
     outputPath: StatePath

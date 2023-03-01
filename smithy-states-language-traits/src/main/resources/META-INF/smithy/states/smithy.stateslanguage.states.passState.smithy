@@ -5,7 +5,6 @@ namespace smithy.stateslanguage
 @trait
 @stateDefinition
 structure passState {
-    type: String = "Pass"
     comment: String
     @required
     nextOrEnd: StateNextOrEnd

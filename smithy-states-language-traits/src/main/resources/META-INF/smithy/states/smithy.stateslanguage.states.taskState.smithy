@@ -5,7 +5,6 @@ namespace smithy.stateslanguage
 @trait
 @stateDefinition
 structure taskState {
-    type: String = "Task"
     comment: String
     inputPath: StatePath
     outputPath: StatePath

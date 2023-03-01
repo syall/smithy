@@ -5,7 +5,6 @@ namespace smithy.stateslanguage
 @trait
 @stateDefinition
 structure parallelState {
-    type: String = "Parallel"
     comment: String
     inputPath: StatePath
     outputPath: StatePath

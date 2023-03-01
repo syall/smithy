@@ -5,7 +5,6 @@ namespace smithy.stateslanguage
 @trait
 @stateDefinition
 structure failState {
-    type: String = "Fail"
     comment: String
     // State-specific
     @required
