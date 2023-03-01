@@ -3,6 +3,7 @@ $version: "2.0"
 namespace smithy.stateslanguage
 
 @trait
+@stateDefinition
 structure waitState {
     type: String = "Wait"
     comment: String

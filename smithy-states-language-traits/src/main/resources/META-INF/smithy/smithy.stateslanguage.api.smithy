@@ -30,7 +30,16 @@ map States {
 string StateIdRef
 
 @trait(selector: "structure")
-structure state {}
+structure state {
+    @required
+    definition: StateDefinitionIdRef
+}
+
+@idRef(failWhenMissing: true, selector: "[trait|trait]")
+string StateDefinitionIdRef
+
+@trait(selector: "structure")
+structure stateDefinition {}
 
 @length(min: 1, max: 80)
 string StateName

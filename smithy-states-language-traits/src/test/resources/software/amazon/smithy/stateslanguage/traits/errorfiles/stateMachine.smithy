@@ -2,7 +2,7 @@ $version: "2.0"
 
 namespace smithy.stateMachine.example
 
-@smithy.stateslanguage#state
+@smithy.stateslanguage#state(definition: smithy.stateslanguage#passState)
 @smithy.stateslanguage#passState(
     comment: "No operation"
     nextOrEnd: { end: true }

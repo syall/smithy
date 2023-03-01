@@ -3,6 +3,7 @@ $version: "2.0"
 namespace smithy.stateslanguage
 
 @trait
+@stateDefinition
 structure mapState {
     type: String = "Map"
     comment: String

@@ -17,8 +17,15 @@ import software.amazon.smithy.utils.ToSmithyBuilder;
 public final class StateTrait extends AbstractTrait implements ToSmithyBuilder<StateTrait> {
     public static final ShapeId ID = ShapeId.from("smithy.stateslanguage#state");
 
+    private final ShapeId definition;
+
     private StateTrait(Builder builder) {
         super(ID, builder.getSourceLocation());
+        this.definition = builder.definition;
+    }
+
+    public ShapeId getDefinition() {
+        return definition;
     }
 
     public static Builder builder() {
@@ -35,7 +42,8 @@ public final class StateTrait extends AbstractTrait implements ToSmithyBuilder<S
 
     @Override
     public SmithyBuilder<StateTrait> toBuilder() {
-        return builder();
+        return builder()
+                .definition(definition);
     }
 
     public static final class Provider extends AbstractTrait.Provider {
@@ -52,7 +60,14 @@ public final class StateTrait extends AbstractTrait implements ToSmithyBuilder<S
     }
 
     public static final class Builder extends AbstractTraitBuilder<StateTrait, Builder> {
+        private ShapeId definition;
+
         private Builder() {
+        }
+
+        public Builder definition(ShapeId definition) {
+            this.definition = definition;
+            return this;
         }
 
         @Override

@@ -23,7 +23,7 @@ structure ExampleHelloWorld {}
 /// Lambda function, so the interpreter attempts to invoke that function.
 /// Assuming the Lambda function executes successfully, the machine will
 /// terminate successfully.
-@smithy.stateslanguage#state
+@smithy.stateslanguage#state(definition: smithy.stateslanguage#taskState)
 @smithy.stateslanguage#taskState(
     resource: "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld"
     nextOrEnd: { end: true }
