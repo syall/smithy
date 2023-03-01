@@ -1,0 +1,93 @@
+/*
+ * Copyright 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package software.amazon.smithy.stateslanguage.traits.states;
+
+import software.amazon.smithy.model.node.Node;
+import software.amazon.smithy.model.node.NodeMapper;
+import software.amazon.smithy.model.shapes.ShapeId;
+import software.amazon.smithy.model.traits.AbstractTrait;
+import software.amazon.smithy.model.traits.AbstractTraitBuilder;
+import software.amazon.smithy.model.traits.Trait;
+import software.amazon.smithy.utils.SmithyBuilder;
+import software.amazon.smithy.utils.ToSmithyBuilder;
+
+public final class SucceedStateTrait extends AbstractTrait implements ToSmithyBuilder<SucceedStateTrait> {
+    public static final ShapeId ID = ShapeId.from("smithy.stateslanguage#succeedState");
+    public static final String TYPE = "Succeed";
+
+    private final String comment;
+    private final String inputPath;
+    private final String outputPath;
+
+    private SucceedStateTrait(Builder builder) {
+        super(ID, builder.getSourceLocation());
+        comment = builder.comment;
+        inputPath = builder.inputPath;
+        outputPath = builder.outputPath;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @Override
+    protected Node createNode() {
+        NodeMapper mapper = new NodeMapper();
+        mapper.disableToNodeForClass(SucceedStateTrait.class);
+        mapper.setOmitEmptyValues(true);
+        return mapper.serialize(this).expectObjectNode();
+    }
+
+    @Override
+    public SmithyBuilder<SucceedStateTrait> toBuilder() {
+        return builder()
+                .comment(comment)
+                .inputPath(inputPath)
+                .outputPath(outputPath);
+    }
+
+    public static final class Provider extends AbstractTrait.Provider {
+        public Provider() {
+            super(ID);
+        }
+
+        @Override
+        public Trait createTrait(ShapeId target, Node value) {
+            SucceedStateTrait result = new NodeMapper().deserialize(value, SucceedStateTrait.class);
+            result.setNodeCache(value);
+            return result;
+        }
+    }
+
+    public static final class Builder extends AbstractTraitBuilder<SucceedStateTrait, Builder> {
+        private String comment;
+        private String inputPath;
+        private String outputPath;
+
+        private Builder() {
+        }
+
+        @Override
+        public SucceedStateTrait build() {
+            return new SucceedStateTrait(this);
+        }
+
+        public Builder comment(String comment) {
+            this.comment = comment;
+            return this;
+        }
+
+        public Builder inputPath(String inputPath) {
+            this.inputPath = inputPath;
+            return this;
+        }
+
+        public Builder outputPath(String outputPath) {
+            this.outputPath = outputPath;
+            return this;
+        }
+    }
+}
