@@ -1,0 +1,19 @@
+/*
+ * Copyright 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+description = "This module contains support for converting Smithy to States Language files."
+
+ext {
+    displayName = "Smithy :: States Language Conversion"
+    moduleName = "software.amazon.smithy.stateslanguage.converter"
+}
+
+dependencies {
+    api project(":smithy-build")
+    api project(":smithy-model")
+    api project(":smithy-utils")
+    api project(":smithy-jsonschema")
+    api project(":smithy-states-language-traits")
+}
