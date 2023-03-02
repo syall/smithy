@@ -12,6 +12,7 @@ import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.ChoiceStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.FailStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.MapStateMapper;
+import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.ParallelStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.PassStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.SucceedStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.TaskStateMapper;
@@ -23,7 +24,9 @@ public final class CoreExtension implements Smithy2StatesLanguageExtension {
     @Override
     public List<StateMachineMapper> getStateMachineMappers() {
         return ListUtils.of(
+            // Universal Uppercase Mapper
             new UppercaseMembersMapper(),
+            // State Machine Mappers
             new ApplyStateMappersMapper()
         );
     }
@@ -31,14 +34,17 @@ public final class CoreExtension implements Smithy2StatesLanguageExtension {
     @Override
     public List<StateMapper> getStateMappers() {
         return ListUtils.of(
+            // Universal Uppercase Mapper
             new UppercaseMembersMapper(),
+            // State Mappers
             new ChoiceStateMapper(),
-            new TaskStateMapper(),
-            new WaitStateMapper(),
-            new PassStateMapper(),
             new FailStateMapper(),
+            new MapStateMapper(),
+            new ParallelStateMapper(),
+            new PassStateMapper(),
             new SucceedStateMapper(),
-            new MapStateMapper()
+            new TaskStateMapper(),
+            new WaitStateMapper()
         );
     }
 }

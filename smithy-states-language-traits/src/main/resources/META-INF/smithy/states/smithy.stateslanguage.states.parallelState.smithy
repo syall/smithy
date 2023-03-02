@@ -16,16 +16,10 @@ structure parallelState {
     retry: StateRetry
     catch: StateCatch
     // State-specific
+    @required
     branches: StateBranchList
 }
 
 list StateBranchList{
-    member: StateBranch
-}
-
-structure StateBranch {
-    @required
-    startAt: StateName
-    @required
-    states: States
+    member: StateMachineIdRef
 }
