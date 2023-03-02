@@ -20,11 +20,11 @@ public class UppercaseMembersMapper implements StateMapper, StateMachineMapper {
 
     @Override
     public ObjectNode updateNode(Context context, Trait trait, ObjectNode objectNode) {
-        return MapperUtils.uppercaseFirstLetterMembers(objectNode);
+        return MapperUtils.withUppercaseFirstLetterMembers(objectNode);
     }
 
     @Override
     public ObjectNode updateNode(Context context, StateMachineTrait trait, ObjectNode objectNode) {
-        return MapperUtils.uppercaseFirstLetterMembers(objectNode);
+        return MapperUtils.withUppercaseFirstLetterMembers(objectNode);
     }
 }

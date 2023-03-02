@@ -47,7 +47,7 @@ public class ChoiceStateMapper implements StateMapper {
     }
 
     private ObjectNode handleBooleanExpression(ObjectNode stateChoiceRule) {
-        stateChoiceRule = MapperUtils.uppercaseFirstLetterMembers(
+        stateChoiceRule = MapperUtils.withUppercaseFirstLetterMembers(
             stateChoiceRule.expectObjectMember("booleanExpression"));
         if (stateChoiceRule.containsMember("And")) {
             return stateChoiceRule.withMember("And",
@@ -64,7 +64,7 @@ public class ChoiceStateMapper implements StateMapper {
     }
 
     private ObjectNode handleDataTestExpression(ObjectNode stateChoiceRule) {
-        stateChoiceRule = MapperUtils.uppercaseFirstLetterMembers(
+        stateChoiceRule = MapperUtils.withUppercaseFirstLetterMembers(
             stateChoiceRule.expectObjectMember("dataTestExpression"));
         StringNode comparisonOperator = stateChoiceRule.expectStringMember("ComparisonOperator");
         stateChoiceRule = stateChoiceRule.withoutMember("ComparisonOperator");

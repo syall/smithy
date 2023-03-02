@@ -19,6 +19,8 @@ public class TaskStateMapper implements StateMapper {
         }
         objectNode = MapperUtils.withStateType("Task", objectNode);
         objectNode = MapperUtils.withNextOrEnd(objectNode);
+        objectNode = MapperUtils.withRetry(objectNode);
+        objectNode = MapperUtils.withCatch(objectNode);
         objectNode = MapperUtils.withMemberOrStatePath("TimeoutSeconds", objectNode);
         objectNode = MapperUtils.withMemberOrStatePath("HeartbeatSeconds", objectNode);
         return objectNode;
