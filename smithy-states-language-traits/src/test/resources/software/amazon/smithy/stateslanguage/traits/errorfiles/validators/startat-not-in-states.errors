@@ -1,0 +1,1 @@
+[ERROR] startat.not.in.states#StartAtNotInStatesStateMachine: Member `startAt` of "Not in states" is not available in the `states` | StateMachineNames
