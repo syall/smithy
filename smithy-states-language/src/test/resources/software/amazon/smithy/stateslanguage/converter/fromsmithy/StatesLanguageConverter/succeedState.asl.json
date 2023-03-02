@@ -2,6 +2,7 @@
     "StartAt": "State",
     "States": {
         "State": {
+            "Type": "Succeed",
             "Comment": "COMMENT",
             "InputPath": "$",
             "OutputPath": "$"
