@@ -1,0 +1,10 @@
+{
+    "StartAt": "State",
+    "States": {
+        "State": {
+            "Comment": "COMMENT",
+            "InputPath": "$",
+            "OutputPath": "$"
+        }
+    }
+}
