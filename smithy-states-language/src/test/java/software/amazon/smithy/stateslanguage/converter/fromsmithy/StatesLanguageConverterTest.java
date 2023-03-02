@@ -41,7 +41,7 @@ public class StatesLanguageConverterTest {
         assertEquals(1, result.size());
         ObjectNode actualNode = result.get(result.keySet().iterator().next());
         Node expectedNode = Node.parse(IoUtils.readUtf8File(modelFile.replace(".smithy", ".asl.json")));
-        Node.assertEquals(actualNode, expectedNode);
+        assertEquals(expectedNode, actualNode);
     }
 
     public static List<String> getStatesLanguageConverterFiles() {
