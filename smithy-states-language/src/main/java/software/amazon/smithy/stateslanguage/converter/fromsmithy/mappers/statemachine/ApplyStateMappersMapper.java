@@ -14,8 +14,8 @@ import software.amazon.smithy.stateslanguage.traits.StateMachineTrait;
 public class ApplyStateMappersMapper implements StateMachineMapper {
     @Override
     public ObjectNode updateNode(Context context, StateMachineTrait trait, ObjectNode objectNode) {
-        ObjectNode stateMachineStatesObjectMode = ObjectNode.builder().build();
-        stateMachineStatesObjectMode = StatesLanguageConverter.applyStateMappers(stateMachineStatesObjectMode, context);
-        return objectNode.withMember("States", stateMachineStatesObjectMode);
+        ObjectNode stateMachineStatesObjectNode = ObjectNode.objectNode();
+        stateMachineStatesObjectNode = StatesLanguageConverter.applyStateMappers(stateMachineStatesObjectNode, context);
+        return objectNode.withMember("States", stateMachineStatesObjectNode);
     }
 }
