@@ -38,6 +38,8 @@
             "Default": "NextState",
             "Type": "Choice"
         },
-        "NextState": {}
+        "NextState": {
+            "Type": "Succeed"
+        }
     }
 }
