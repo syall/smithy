@@ -57,7 +57,7 @@ public class ChoiceStateMapper implements StateMapper {
                     handleStateChoiceRuleList("Or", stateChoiceRule));
         } else if (stateChoiceRule.containsMember("Not")) {
             return stateChoiceRule.withMember("Not",
-                    handleStateChoiceRule(stateChoiceRule));
+                    handleStateChoiceRule(stateChoiceRule.expectObjectMember("Not")));
         }
         throw new StatesLanguageException("Boolean expression type not implemented: `"
                 + Node.prettyPrintJson(stateChoiceRule) + "`");

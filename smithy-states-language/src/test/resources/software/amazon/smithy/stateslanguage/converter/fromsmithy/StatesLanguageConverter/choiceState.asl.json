@@ -1,0 +1,43 @@
+{
+    "StartAt": "State",
+    "States": {
+        "State": {
+            "Comment": "COMMENT",
+            "InputPath": "$",
+            "OutputPath": "$",
+            "Choices": [
+                {
+                    "Next": "NextState",
+                    "Not": {
+                        "Or": [
+                            {
+                                "Variable": "$",
+                                "StringEquals": "TEST"
+                            },
+                            {
+                                "And": [
+                                    {
+                                        "Variable": "$",
+                                        "NumericEquals": 0
+                                    },
+                                    {
+                                        "Variable": "$",
+                                        "StringEqualsPath": "$"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Next": "NextState",
+                    "Variable": "$",
+                    "IsNull": true
+                }
+            ],
+            "Default": "NextState",
+            "Type": "Choice"
+        },
+        "NextState": {}
+    }
+}
