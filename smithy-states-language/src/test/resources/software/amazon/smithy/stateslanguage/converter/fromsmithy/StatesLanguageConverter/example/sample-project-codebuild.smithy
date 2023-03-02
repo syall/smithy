@@ -1,6 +1,6 @@
 $version: "2.0"
 
-namespace codebuild.example
+namespace sample.project.codebuild
 
 @externalDocumentation(
     "Documentation": "https://docs.aws.amazon.com/step-functions/latest/dg/sample-project-codebuild.html"
