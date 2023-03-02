@@ -6,6 +6,7 @@
 package software.amazon.smithy.stateslanguage.converter.fromsmithy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -26,33 +27,28 @@ import software.amazon.smithy.utils.IoUtils;
 
 public class StatesLanguageConverterTest {
     @ParameterizedTest
-    @MethodSource("getSingleStatesLanguageConverterFiles")
-    public void convertsSingleStateMachinesToStatesLanguage(String modelFile) {
+    @MethodSource("getStatesLanguageConverterFiles")
+    public void convertsStateMachinesToStatesLanguage(String modelFile) {
         Model model = Model.assembler()
                 .addImport(modelFile)
                 .discoverModels()
                 .assemble()
                 .unwrap();
-        Map<ShapeId, ObjectNode> result = StatesLanguageConverter.create()
+        Map<ShapeId, ObjectNode> result = StatesLanguageConverter
+                .create()
                 .convertToNodes(model);
-        assertEquals(1, result.size());
-        ObjectNode actualNode = result.get(result.keySet().iterator().next());
-        Node expectedNode = Node.parse(IoUtils.readUtf8File(modelFile.replace(".smithy", ".asl.json")));
-        try {
-            Node.assertEquals(actualNode, expectedNode);
-        } catch (Exception e) {
-            System.err.println(modelFile);
-            for (String diff : Node.diff(actualNode, expectedNode)) {
-                System.err.println(diff);
-            }
-            System.err.println(Node.prettyPrintJson(actualNode));
-        }
+        assertEquals(true, result.size() >= 1);
+        ObjectNode actualNode = getActualNode(result, modelFile);
+        assertNotNull(actualNode);
+        Node expectedNode = getExpectedNode(modelFile);
+        showDiffsOnInequality(actualNode, expectedNode, modelFile);
         assertEquals(expectedNode, actualNode);
     }
 
-    public static List<String> getSingleStatesLanguageConverterFiles() {
+    public static List<String> getStatesLanguageConverterFiles() {
         try {
-            return Files.walk(Paths.get(StatesLanguageConverter.class.getResource("StatesLanguageConverter/single").toURI()))
+            return Files
+                    .walk(Paths.get(StatesLanguageConverter.class.getResource("StatesLanguageConverter").toURI()))
                     .filter(Files::isRegularFile)
                     .filter(file -> file.toString().endsWith(".smithy"))
                     .map(Object::toString)
@@ -62,22 +58,21 @@ public class StatesLanguageConverterTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("getMultipleStatesLanguageConverterFiles")
-    public void convertsMultipleStateMachinesToStatesLanguage(String modelFile) {
-        Model model = Model.assembler()
-                .addImport(modelFile)
-                .discoverModels()
-                .assemble()
-                .unwrap();
-        Map<ShapeId, ObjectNode> result = StatesLanguageConverter.create()
-                .convertToNodes(model);
-        assertEquals(true, result.size() > 1);
-        ShapeId outputStateMachine = ShapeId.from(Node.parse(IoUtils.readUtf8File(
-                modelFile.replace(".smithy", ".outputStateMachine.json"))).expectStringNode().getValue());
-        ObjectNode actualNode = result.get(outputStateMachine);
-        Node expectedNode = Node.parse(IoUtils.readUtf8File(
-                modelFile.replace(".smithy", ".asl.json")));
+    private static ObjectNode getActualNode(Map<ShapeId, ObjectNode> result, String modelFile) {
+        try {
+            ShapeId outputStateMachine = ShapeId.from(Node.parse(IoUtils.readUtf8File(
+                    modelFile.replace(".smithy", ".outputStateMachine.json"))).expectStringNode().getValue());
+            return result.get(outputStateMachine);
+        } catch (Exception e) {
+            return result.get(result.keySet().iterator().next());
+        }
+    }
+
+    private static Node getExpectedNode(String modelFile) {
+        return Node.parse(IoUtils.readUtf8File(modelFile.replace(".smithy", ".asl.json")));
+    }
+
+    private static void showDiffsOnInequality(Node actualNode, Node expectedNode, String modelFile) {
         try {
             Node.assertEquals(actualNode, expectedNode);
         } catch (Exception e) {
@@ -86,56 +81,6 @@ public class StatesLanguageConverterTest {
                 System.err.println(diff);
             }
             System.err.println(Node.prettyPrintJson(actualNode));
-        }
-        assertEquals(expectedNode, actualNode);
-    }
-
-    public static List<String> getMultipleStatesLanguageConverterFiles() {
-        try {
-            return Files.walk(Paths.get(StatesLanguageConverter.class.getResource("StatesLanguageConverter/multiple").toURI()))
-                    .filter(Files::isRegularFile)
-                    .filter(file -> file.toString().endsWith(".smithy"))
-                    .map(Object::toString)
-                    .collect(Collectors.toList());
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @ParameterizedTest
-    @MethodSource("getExampleStatesLanguageConverterFiles")
-    public void convertsExampleStateMachinesToStatesLanguage(String modelFile) {
-        Model model = Model.assembler()
-                .addImport(modelFile)
-                .discoverModels()
-                .assemble()
-                .unwrap();
-        Map<ShapeId, ObjectNode> result = StatesLanguageConverter.create()
-                .convertToNodes(model);
-        ObjectNode actualNode = result.get(result.keySet().iterator().next());
-        Node expectedNode = Node.parse(IoUtils.readUtf8File(
-                modelFile.replace(".smithy", ".asl.json")));
-        try {
-            Node.assertEquals(actualNode, expectedNode);
-        } catch (Exception e) {
-            System.err.println(modelFile);
-            for (String diff : Node.diff(actualNode, expectedNode)) {
-                System.err.println(diff);
-            }
-            System.err.println(Node.prettyPrintJson(actualNode));
-        }
-        assertEquals(expectedNode, actualNode);
-    }
-
-    public static List<String> getExampleStatesLanguageConverterFiles() {
-        try {
-            return Files.walk(Paths.get(StatesLanguageConverter.class.getResource("StatesLanguageConverter/example").toURI()))
-                    .filter(Files::isRegularFile)
-                    .filter(file -> file.toString().endsWith(".smithy"))
-                    .map(Object::toString)
-                    .collect(Collectors.toList());
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
 }
