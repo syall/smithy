@@ -1,0 +1,41 @@
+{
+  "Comment": "An example demonstrates how to use Athena to query a target table to get current data, then update it with new data from other sources.",
+  "StartAt": "Get Target Table",
+  "States": {
+    "Get Target Table": {
+      "Type": "Task",
+      "Parameters": {
+        "DatabaseName": "<GLUE_DATABASE_NAME>",
+        "Name": "target"
+      },
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "Glue.EntityNotFoundException"
+          ],
+          "Next": "Create Target Table"
+        }
+      ],
+      "Resource": "arn:aws:states:::aws-sdk:glue:getTable",
+      "Next": "Update Target Table"
+    },
+    "Create Target Table": {
+      "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+      "Parameters": {
+        "QueryString": "<ATHENA_QUERYSTRING>",
+        "WorkGroup": "<ATHENA_WORKGROUP>"
+      },
+      "Type": "Task",
+      "Next": "Update Target Table"
+    },
+    "Update Target Table": {
+      "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+      "Parameters": {
+        "QueryString": "<ATHENA_QUERYSTRING>",
+        "WorkGroup": "<ATHENA_WORKGROUP>"
+      },
+      "Type": "Task",
+      "End": true
+    }
+  }
+}
