@@ -16,7 +16,6 @@ public class ApplyStateMappersMapper implements StateMachineMapper {
     public ObjectNode updateNode(Context context, StateMachineTrait trait, ObjectNode objectNode) {
         ObjectNode stateMachineStatesObjectMode = ObjectNode.builder().build();
         stateMachineStatesObjectMode = StatesLanguageConverter.applyStateMappers(stateMachineStatesObjectMode, context);
-        objectNode = objectNode.withMember("States", stateMachineStatesObjectMode);
-        return objectNode.withoutMember("states");
+        return objectNode.withMember("States", stateMachineStatesObjectMode);
     }
 }

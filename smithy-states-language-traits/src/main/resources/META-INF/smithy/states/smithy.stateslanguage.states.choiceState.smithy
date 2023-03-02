@@ -9,8 +9,37 @@ structure choiceState {
     inputPath: StatePath
     outputPath: StatePath
     // State-specific
-    choices: StateChoiceRuleList
+    choices: StateChoiceRuleWithNextList
     default: StateName
+}
+
+@length(min: 1)
+list StateChoiceRuleWithNextList {
+    member: StateChoiceRuleWithNext
+}
+
+union StateChoiceRuleWithNext {
+    booleanExpression: StateBooleanExpressionWithNext
+    dataTestExpression: StateDataTestExpressionWithNext
+}
+
+structure StateBooleanExpressionWithNext {
+    @required
+    next: StateName
+    and: StateChoiceRuleList
+    or: StateChoiceRuleList
+    not: StateChoiceRule
+}
+
+structure StateDataTestExpressionWithNext {
+    @required
+    next: StateName
+    @required
+    variable: StatePath
+    @required
+    comparisonOperator: StateComparisonOperator
+    @required 
+    comparisonOperatorValue: StateComparisonOperatorValue
 }
 
 @length(min: 1)
@@ -24,14 +53,12 @@ union StateChoiceRule {
 }
 
 structure StateBooleanExpression {
-    next: StateName
     and: StateChoiceRuleList
     or: StateChoiceRuleList
     not: StateChoiceRule
 }
 
 structure StateDataTestExpression {
-    next: StateName
     @required
     variable: StatePath
     @required
