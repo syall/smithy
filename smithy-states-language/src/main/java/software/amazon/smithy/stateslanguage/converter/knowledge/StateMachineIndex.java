@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package software.amazon.smithy.stateslanguage.traits.knowledge;
+package software.amazon.smithy.stateslanguage.converter.knowledge;
 
 import java.util.HashMap;
 import java.util.Map;
