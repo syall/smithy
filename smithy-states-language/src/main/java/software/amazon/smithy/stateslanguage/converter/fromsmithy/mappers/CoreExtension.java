@@ -9,6 +9,7 @@ import java.util.List;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.Smithy2StatesLanguageExtension;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMachineMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMapper;
+import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.AwsLambdaTaskStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.ChoiceStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.FailStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.MapStateMapper;
@@ -44,7 +45,9 @@ public final class CoreExtension implements Smithy2StatesLanguageExtension {
             new PassStateMapper(),
             new SucceedStateMapper(),
             new TaskStateMapper(),
-            new WaitStateMapper()
+            new WaitStateMapper(),
+            // AWS Mappers
+            new AwsLambdaTaskStateMapper()
         );
     }
 }
