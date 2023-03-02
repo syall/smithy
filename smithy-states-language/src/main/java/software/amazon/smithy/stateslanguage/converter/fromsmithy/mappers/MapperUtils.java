@@ -40,13 +40,12 @@ public final class MapperUtils {
         if (!objectNode.containsMember(memberName)) {
             return objectNode;
         }
-        String memberNamePath = memberName + "Path";
         ObjectNode memberNode = objectNode.expectObjectMember(memberName);
         objectNode = objectNode.withoutMember(memberName);
         if (memberNode.containsMember("value")) {
             return objectNode.withMember(memberName, memberNode.expectMember("value"));
         } else if (memberNode.containsMember("path")) {
-            return objectNode.withMember(memberNamePath, memberNode.expectMember("path"));
+            return objectNode.withMember(memberName + "Path", memberNode.expectMember("path"));
         }
         throw new StatesLanguageException(
                 "Expected `value` or `path` on in `" + memberName + "`: `"
