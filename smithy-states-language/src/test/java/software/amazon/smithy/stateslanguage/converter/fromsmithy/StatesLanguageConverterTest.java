@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -31,6 +32,8 @@ public class StatesLanguageConverterTest {
     public void convertsStateMachinesToStatesLanguage(String modelFile) {
         Model model = Model.assembler()
                 .addImport(modelFile)
+                .addImport(getAthenaModel())
+                .addImport(getSnsModel())
                 .discoverModels()
                 .assemble()
                 .unwrap();
@@ -82,5 +85,13 @@ public class StatesLanguageConverterTest {
             }
             System.err.println(Node.prettyPrintJson(actualNode));
         }
+    }
+
+    private static URL getAthenaModel() {
+        return StatesLanguageConverter.class.getResource("StatesLanguageConverter/aws/athena.model.json");
+    }
+
+    private static URL getSnsModel() {
+        return StatesLanguageConverter.class.getResource("StatesLanguageConverter/aws/sns.model.json");
     }
 }

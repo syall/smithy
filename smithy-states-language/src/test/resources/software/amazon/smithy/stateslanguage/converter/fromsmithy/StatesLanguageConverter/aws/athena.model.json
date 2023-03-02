@@ -1,0 +1,56 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "com.amazonaws.athena#AmazonAthena": {
+            "type": "service",
+            "version": "2017-05-18",
+            "operations": [
+                {
+                    "target": "com.amazonaws.athena#GetQueryResults"
+                },
+                {
+                    "target": "com.amazonaws.athena#StartQueryExecution"
+                }
+            ],
+            "traits": {
+                "aws.api#service": {
+                    "sdkId": "Athena",
+                    "arnNamespace": "athena",
+                    "cloudFormationName": "Athena",
+                    "cloudTrailEventSource": "athena.amazonaws.com",
+                    "endpointPrefix": "athena"
+                }
+            }
+        },
+        "com.amazonaws.athena#GetQueryResults": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.athena#GetQueryResultsInput"
+            },
+            "output": {
+                "target": "com.amazonaws.athena#GetQueryResultsOutput"
+            }
+        },
+        "com.amazonaws.athena#GetQueryResultsInput": {
+            "type": "structure"
+        },
+        "com.amazonaws.athena#GetQueryResultsOutput": {
+            "type": "structure"
+        },
+        "com.amazonaws.athena#StartQueryExecution": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.athena#StartQueryExecutionInput"
+            },
+            "output": {
+                "target": "com.amazonaws.athena#StartQueryExecutionOutput"
+            }
+        },
+        "com.amazonaws.athena#StartQueryExecutionInput": {
+            "type": "structure"
+        },
+        "com.amazonaws.athena#StartQueryExecutionOutput": {
+            "type": "structure"
+        }
+    }
+}

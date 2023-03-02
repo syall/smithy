@@ -1,6 +1,7 @@
 smithy.stateslanguage.api.smithy
 smithy.stateslanguage.errors.smithy
 aws/smithy.aws.stateslanguage.lambdaTaskState.smithy
+aws/smithy.aws.stateslanguage.sdkTaskState.smithy
 states/smithy.stateslanguage.states.choiceState.smithy
 states/smithy.stateslanguage.states.failState.smithy
 states/smithy.stateslanguage.states.mapState.smithy

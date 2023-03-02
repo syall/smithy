@@ -1,0 +1,38 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "com.amazonaws.sns#AmazonSimpleNotificationService": {
+            "type": "service",
+            "version": "2010-03-31",
+            "operations": [
+                {
+                    "target": "com.amazonaws.sns#Publish"
+                }
+            ],
+            "traits": {
+                "aws.api#service": {
+                    "sdkId": "SNS",
+                    "arnNamespace": "sns",
+                    "cloudFormationName": "SNS",
+                    "cloudTrailEventSource": "sns.amazonaws.com",
+                    "endpointPrefix": "sns"
+                }
+            }
+        },
+        "com.amazonaws.sns#Publish": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.sns#PublishInput"
+            },
+            "output": {
+                "target": "com.amazonaws.sns#PublishResponse"
+            }
+        },
+        "com.amazonaws.sns#PublishInput": {
+            "type": "structure"
+        },
+        "com.amazonaws.sns#PublishResponse": {
+            "type": "structure"
+        }
+    }
+}

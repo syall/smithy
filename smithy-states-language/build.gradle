@@ -16,4 +16,7 @@ dependencies {
     api project(":smithy-utils")
     api project(":smithy-jsonschema")
     api project(":smithy-states-language-traits")
+    // AWS models
+    api project(":smithy-aws-traits")
+    api project(":smithy-rules-engine")
 }
