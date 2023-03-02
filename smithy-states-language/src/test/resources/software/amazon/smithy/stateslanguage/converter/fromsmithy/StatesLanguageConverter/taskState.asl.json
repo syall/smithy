@@ -1,0 +1,52 @@
+{
+    "StartAt": "State",
+    "States": {
+        "State": {
+            "Comment": "COMMENT",
+            "InputPath": "$",
+            "OutputPath": "$",
+            "ResultPath": "$",
+            "Parameters": {
+                "x": 3,
+                "y": 2
+            },
+            "ResultSelector": {
+                "selected": "selected"
+            },
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 2,
+                    "MaxAttempts": 1,
+                    "BackoffRate": 1.2
+                }
+            ],
+            "Catch": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "NextTestState",
+                    "ResultPath": "$"
+                }
+            ],
+            "Resource": "www.amazon.com",
+            "Credentials": {
+                "token": "TOKEN"
+            },
+            "Type": "Task",
+            "Next": "NextState",
+            "TimeoutSeconds": 2,
+            "HeartbeatSeconds": 1
+        },
+        "NextState": {
+            "Resource": "www.aws.com",
+            "Type": "Task",
+            "End": true,
+            "TimeoutSecondsPath": "$",
+            "HeartbeatSecondsPath": "$"
+        }
+    }
+}
