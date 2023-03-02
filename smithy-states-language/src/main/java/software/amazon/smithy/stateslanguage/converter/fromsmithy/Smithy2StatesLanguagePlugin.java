@@ -12,7 +12,6 @@ import software.amazon.smithy.build.PluginContext;
 import software.amazon.smithy.build.SmithyBuildPlugin;
 import software.amazon.smithy.model.node.ObjectNode;
 import software.amazon.smithy.model.shapes.ShapeId;
-import software.amazon.smithy.stateslanguage.converter.StatesLanguageConfig;
 
 public final class Smithy2StatesLanguagePlugin implements SmithyBuildPlugin {
     @Override
@@ -24,8 +23,6 @@ public final class Smithy2StatesLanguagePlugin implements SmithyBuildPlugin {
     public void execute(PluginContext context) {
         StatesLanguageConverter converter = StatesLanguageConverter.create();
         context.getPluginClassLoader().ifPresent(converter::classLoader);
-        StatesLanguageConfig config = StatesLanguageConfig.fromNode(context.getSettings());
-        converter.config(config);
 
         Map<ShapeId, ObjectNode> nodes = converter.convertToNodes(context.getModel());
         FileManifest fileManifest = context.getFileManifest();
@@ -37,9 +34,9 @@ public final class Smithy2StatesLanguagePlugin implements SmithyBuildPlugin {
 
     static String getFileNameFromStateMachine(ShapeId shapeId) {
         return shapeId.toString()
-            .toLowerCase(Locale.US)
-            .replace(".", "-")
-            .replace("#", "-")
-            + ".asl.json";
+                .toLowerCase(Locale.US)
+                .replace(".", "-")
+                .replace("#", "-")
+                + ".asl.json";
     }
 }

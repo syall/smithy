@@ -41,6 +41,9 @@ string StateDefinitionIdRef
 @trait(selector: "structure")
 structure stateDefinition {}
 
+@idRef(failWhenMissing: true, selector: "structure [trait|smithy.stateslanguage#stateMachine]")
+string StateMachineIdRef
+
 @length(min: 1, max: 80)
 string StateName
 

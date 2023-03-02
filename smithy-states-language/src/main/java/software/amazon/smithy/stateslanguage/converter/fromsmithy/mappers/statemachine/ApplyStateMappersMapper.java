@@ -9,11 +9,10 @@ import software.amazon.smithy.model.node.ObjectNode;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.Context;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMachineMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StatesLanguageConverter;
-import software.amazon.smithy.stateslanguage.traits.StateMachineTrait;
 
 public class ApplyStateMappersMapper implements StateMachineMapper {
     @Override
-    public ObjectNode updateNode(Context context, StateMachineTrait trait, ObjectNode objectNode) {
+    public ObjectNode updateNode(Context context, ObjectNode objectNode) {
         ObjectNode stateMachineStatesObjectNode = ObjectNode.objectNode();
         stateMachineStatesObjectNode = StatesLanguageConverter.applyStateMappers(stateMachineStatesObjectNode, context);
         return objectNode.withMember("States", stateMachineStatesObjectNode);

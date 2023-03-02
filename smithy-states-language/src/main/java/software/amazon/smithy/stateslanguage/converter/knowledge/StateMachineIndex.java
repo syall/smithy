@@ -23,12 +23,11 @@ public final class StateMachineIndex implements KnowledgeIndex {
     public StateMachineIndex(Model model) {
         model.getShapesWithTrait(StateMachineTrait.class).forEach(shape -> {
             StateMachineTrait stateMachineTrait = shape.expectTrait(StateMachineTrait.class);
-            stateMachineStates.putIfAbsent(shape.getId(), new HashMap<>());
-            Map<String, Trait> stateMachineMap = stateMachineStates.get(shape.getId());
-            if (stateMachineMap == null) {
-                throw new IllegalStateException(
-                    "State Machine `" + shape.getId() + "` should be in the State Machine Index");
+            if (stateMachineStates.containsKey(shape.getId())) {
+                return;
             }
+            stateMachineStates.put(shape.getId(), new HashMap<>());
+            Map<String, Trait> stateMachineMap = stateMachineStates.get(shape.getId());
             stateMachineTrait.getStates().forEach((stateName, shapeId) -> {
                 if (stateMachineMap.containsKey(stateName)) {
                     throw new StatesLanguageException(

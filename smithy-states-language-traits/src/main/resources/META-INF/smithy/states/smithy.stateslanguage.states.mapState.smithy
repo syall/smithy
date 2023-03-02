@@ -61,16 +61,16 @@ union MaxItemsOrStatePath {
 
 structure StateItemBatcher {
     batchInput: StatePayloadTemplate
-    maxItemsPerBatch: MaxItemsPerBatch
-    maxInputBytesPerBatch: MaxInputBytesPerBatch
+    maxItemsPerBatch: MaxItemsPerBatchOrStatePath
+    maxInputBytesPerBatch: MaxInputBytesPerBatchOrStatePath
 }
 
-union MaxItemsPerBatch {
+union MaxItemsPerBatchOrStatePath {
     value: PositiveInteger
     path: StatePath
 }
 
-union MaxInputBytesPerBatch {
+union MaxInputBytesPerBatchOrStatePath {
     value: PositiveInteger
     path: StatePath
 }
@@ -83,11 +83,6 @@ structure StateResultWriter {
 
 structure StateItemProcessor {
     @required
-    @length(min: 1)
-    states: States
-
-    @required
-    startAt: StateName
-
+    stateMachine: StateMachineIdRef
     processorConfig: StatePayloadTemplate
 }

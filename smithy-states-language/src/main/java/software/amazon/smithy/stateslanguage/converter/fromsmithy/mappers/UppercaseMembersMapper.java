@@ -10,7 +10,6 @@ import software.amazon.smithy.model.traits.Trait;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.Context;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMachineMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMapper;
-import software.amazon.smithy.stateslanguage.traits.StateMachineTrait;
 
 public class UppercaseMembersMapper implements StateMapper, StateMachineMapper {
     @Override
@@ -24,7 +23,7 @@ public class UppercaseMembersMapper implements StateMapper, StateMachineMapper {
     }
 
     @Override
-    public ObjectNode updateNode(Context context, StateMachineTrait trait, ObjectNode objectNode) {
+    public ObjectNode updateNode(Context context, ObjectNode objectNode) {
         return MapperUtils.withUppercaseFirstLetterMembers(objectNode);
     }
 }

@@ -1,0 +1,109 @@
+{
+    "StartAt": "State",
+    "States": {
+        "State": {
+            "Type": "Map",
+            "Comment": "COMMENT",
+            "InputPath": "$",
+            "OutputPath": "$",
+            "Next": "NextState",
+            "ResultPath": "$",
+            "Parameters": {
+                "x": 3,
+                "y": 2
+            },
+            "ResultSelector": {
+                "selected": "selected"
+            },
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "IntervalSeconds": 2,
+                    "MaxAttempts": 1,
+                    "BackoffRate": 1.2
+                }
+            ],
+            "Catch": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "NextTestState",
+                    "ResultPath": "$"
+                }
+            ],
+            "ItemProcessor": {
+                "States": {
+                    "TerminalState": {
+                        "Type": "Succeed"
+                    }
+                },
+                "StartAt": "TerminalState",
+                "ProcessorConfig": {
+                    "prop": "prop"
+                }
+            },
+            "ItemsPath": "$",
+            "ItemReader": {
+                "Resource": "www.amazon.com",
+                "Parameters": {
+                    "test": "test"
+                },
+                "ReaderConfig": {
+                    "MaxItems": 10
+                }
+            },
+            "ItemSelector": {
+                "x": 3,
+                "y": 2
+            },
+            "ItemBatcher": {
+                "BatchInput": {
+                    "x": 3,
+                    "y": 2
+                },
+                "MaxItemsPerBatch": 10,
+                "MaxInputBytesPerBatch": 1000
+            },
+            "ResultWriter": {
+                "Resource": "www.aws.com",
+                "Parameters": {
+                    "test": "test"
+                }
+            },
+            "MaxConcurrency": 1,
+            "ToleratedFailurePercentage": 0,
+            "ToleratedFailureCount": 1
+        },
+        "NextState": {
+            "Type": "Map",
+            "End": true,
+            "ItemProcessor": {
+                "States": {
+                    "TerminalState": {
+                        "Type": "Succeed"
+                    }
+                },
+                "StartAt": "TerminalState",
+                "ProcessorConfig": {
+                    "prop": "prop"
+                }
+            },
+            "ItemReader": {
+                "Resource": "www.amazon.com",
+                "ReaderConfig": {
+                    "MaxItemsPath": "$"
+                }
+            },
+            "ItemBatcher": {
+                "MaxItemsPerBatchPath": "$",
+                "MaxInputBytesPerBatchPath": "$"
+            },
+            "MaxConcurrencyPath": "$",
+            "ToleratedFailurePercentagePath": "$",
+            "ToleratedFailureCountPath": "$"
+        }
+    }
+}
