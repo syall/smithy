@@ -46,7 +46,7 @@ structure GetTestResultsState {}
                 variable: "$.Reports[0].Status"
                 comparisonOperator: "StringEquals"
                 comparisonOperatorValue: "SUCCEEDED"
-                next: "NotifySuccess"
+                next: "Notify Success"
             }
         }
     ]
