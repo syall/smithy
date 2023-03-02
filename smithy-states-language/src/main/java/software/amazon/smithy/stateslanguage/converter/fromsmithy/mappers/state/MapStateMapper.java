@@ -96,7 +96,7 @@ public class MapStateMapper implements StateMapper {
         return objectNode.withMember("ItemBatcher", itemBatcherNode);
     }
 
-    ObjectNode handleResultWriter(ObjectNode objectNode) {
+    private ObjectNode handleResultWriter(ObjectNode objectNode) {
         if (!objectNode.containsMember("ResultWriter")) {
             return objectNode;
         }
