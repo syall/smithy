@@ -11,6 +11,7 @@ import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMachineMa
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.ChoiceStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.TaskStateMapper;
+import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.WaitStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.statemachine.ApplyStateMappersMapper;
 import software.amazon.smithy.utils.ListUtils;
 
@@ -28,7 +29,8 @@ public final class CoreExtension implements Smithy2StatesLanguageExtension {
         return ListUtils.of(
             new UppercaseMembersMapper(),
             new ChoiceStateMapper(),
-            new TaskStateMapper()
+            new TaskStateMapper(),
+            new WaitStateMapper()
         );
     }
 }

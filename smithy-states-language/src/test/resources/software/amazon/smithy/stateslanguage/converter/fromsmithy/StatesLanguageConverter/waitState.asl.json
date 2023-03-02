@@ -1,0 +1,20 @@
+{
+    "StartAt": "State",
+    "States": {
+        "State": {
+            "Type": "Wait",
+            "Comment": "COMMENT",
+            "InputPath": "$",
+            "OutputPath": "$",
+            "Next": "NextState",
+            "Seconds": 1,
+            "Timestamp": "2023-03-01T09:16:04Z"
+        },
+        "NextState": {
+            "Type": "Wait",
+            "End": true,
+            "SecondsPath": "$",
+            "TimestampPath": "$"
+        }
+    }
+}
