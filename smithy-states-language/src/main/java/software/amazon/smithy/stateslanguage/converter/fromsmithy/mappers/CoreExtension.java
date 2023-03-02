@@ -10,6 +10,7 @@ import software.amazon.smithy.stateslanguage.converter.fromsmithy.Smithy2StatesL
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMachineMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.ChoiceStateMapper;
+import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.PassStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.TaskStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.state.WaitStateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.statemachine.ApplyStateMappersMapper;
@@ -30,7 +31,8 @@ public final class CoreExtension implements Smithy2StatesLanguageExtension {
             new UppercaseMembersMapper(),
             new ChoiceStateMapper(),
             new TaskStateMapper(),
-            new WaitStateMapper()
+            new WaitStateMapper(),
+            new PassStateMapper()
         );
     }
 }

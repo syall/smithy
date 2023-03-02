@@ -1,0 +1,25 @@
+{
+    "StartAt": "State",
+    "States": {
+        "State": {
+            "Type": "Pass",
+            "Comment": "COMMENT",
+            "InputPath": "$",
+            "OutputPath": "$",
+            "Next": "NextState",
+            "ResultPath": "$",
+            "Parameters": {
+                "x": 3,
+                "y": 2
+            },
+            "Result": {
+                "x": "3",
+                "y": "2"
+            }
+        },
+        "NextState": {
+            "Type": "Pass",
+            "End": true
+        }
+    }
+}
