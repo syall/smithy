@@ -17,8 +17,8 @@ import software.amazon.smithy.model.shapes.Shape;
 import software.amazon.smithy.model.shapes.ShapeId;
 import software.amazon.smithy.model.traits.Trait;
 import software.amazon.smithy.stateslanguage.converter.StatesLanguageConfig;
+import software.amazon.smithy.stateslanguage.converter.knowledge.StateMachineIndex;
 import software.amazon.smithy.stateslanguage.traits.StateMachineTrait;
-import software.amazon.smithy.stateslanguage.traits.knowledge.StateMachineIndex;
 
 public final class StatesLanguageConverter {
     private ClassLoader classLoader = StatesLanguageConverter.class.getClassLoader();

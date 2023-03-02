@@ -12,6 +12,7 @@ import software.amazon.smithy.model.knowledge.KnowledgeIndex;
 import software.amazon.smithy.model.shapes.Shape;
 import software.amazon.smithy.model.shapes.ShapeId;
 import software.amazon.smithy.model.traits.Trait;
+import software.amazon.smithy.stateslanguage.converter.StatesLanguageException;
 import software.amazon.smithy.stateslanguage.traits.StateMachineTrait;
 import software.amazon.smithy.stateslanguage.traits.StateTrait;
 
@@ -30,7 +31,7 @@ public final class StateMachineIndex implements KnowledgeIndex {
             }
             stateMachineTrait.getStates().forEach((stateName, shapeId) -> {
                 if (stateMachineMap.containsKey(stateName)) {
-                    throw new RuntimeException(
+                    throw new StatesLanguageException(
                         "State `" + stateName + "`is already defined in State Machine `" + shape.getId() + "`");
                 }
                 Shape stateShape = model.expectShape(shapeId);
@@ -40,7 +41,7 @@ public final class StateMachineIndex implements KnowledgeIndex {
                         .filter(entry -> entry.getKey().equals(stateDefinition))
                         .findFirst()
                         .map(s -> s.getValue())
-                        .orElseThrow(() -> new RuntimeException(
+                        .orElseThrow(() -> new StatesLanguageException(
                             "Could not find associated state definition `"
                             + stateDefinition + "` on state `" + shapeId + "`"));
                 stateMachineMap.put(stateName, stateDefinitionTrait);

@@ -10,6 +10,7 @@ import software.amazon.smithy.model.node.Node;
 import software.amazon.smithy.model.node.ObjectNode;
 import software.amazon.smithy.model.node.StringNode;
 import software.amazon.smithy.model.traits.Trait;
+import software.amazon.smithy.stateslanguage.converter.StatesLanguageException;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.Context;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.StateMapper;
 import software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers.MapperUtils;
@@ -41,7 +42,7 @@ public class ChoiceStateMapper implements StateMapper {
         } else if (stateChoiceRule.containsMember("dataTestExpression")) {
             return handleDataTestExpression(stateChoiceRule);
         }
-        throw new RuntimeException("Choice rule type not implemented: `"
+        throw new StatesLanguageException("Choice rule type not implemented: `"
                 + Node.prettyPrintJson(stateChoiceRule) + "`");
     }
 
@@ -58,7 +59,7 @@ public class ChoiceStateMapper implements StateMapper {
             return stateChoiceRule.withMember("Not",
                     handleStateChoiceRule(stateChoiceRule));
         }
-        throw new RuntimeException("Boolean expression type not implemented: `"
+        throw new StatesLanguageException("Boolean expression type not implemented: `"
                 + Node.prettyPrintJson(stateChoiceRule) + "`");
     }
 
