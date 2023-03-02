@@ -13,7 +13,7 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#succeedState)
 @smithy.stateslanguage#succeedState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { null: true }
 )
 structure TestState {}

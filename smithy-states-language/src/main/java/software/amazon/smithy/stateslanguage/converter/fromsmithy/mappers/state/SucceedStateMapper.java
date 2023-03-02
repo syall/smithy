@@ -17,6 +17,7 @@ public class SucceedStateMapper implements StateMapper {
         if (!trait.toShapeId().toString().equals("smithy.stateslanguage#succeedState")) {
             return objectNode;
         }
+        objectNode = MapperUtils.withInputPathOutputPath(objectNode);
         return MapperUtils.withStateType("Succeed", objectNode);
     }
 }

@@ -8,6 +8,7 @@ package software.amazon.smithy.stateslanguage.converter.fromsmithy.mappers;
 import java.util.Optional;
 import software.amazon.smithy.model.node.ArrayNode;
 import software.amazon.smithy.model.node.Node;
+import software.amazon.smithy.model.node.NullNode;
 import software.amazon.smithy.model.node.ObjectNode;
 import software.amazon.smithy.model.node.StringNode;
 import software.amazon.smithy.stateslanguage.converter.StatesLanguageException;
@@ -57,15 +58,55 @@ public final class MapperUtils {
             return objectNode;
         }
         return objectNode.withMember("Retry",
-            withUppercaseFirstLetterObjectMembers(objectNode.expectArrayMember("Retry")));
+                withUppercaseFirstLetterObjectMembers(objectNode.expectArrayMember("Retry")));
     }
 
     public static ObjectNode withCatch(ObjectNode objectNode) {
         if (!objectNode.containsMember("Catch")) {
             return objectNode;
         }
-        return objectNode.withMember("Catch",
-            withUppercaseFirstLetterObjectMembers(objectNode.expectArrayMember("Catch")));
+        objectNode = objectNode.withMember("Catch",
+                withUppercaseFirstLetterObjectMembers(objectNode.expectArrayMember("Catch")));
+        ArrayNode result = ArrayNode.arrayNode();
+        for (Node catchNode : objectNode.expectArrayMember("Catch").getElements()) {
+            result = result.withValue(withResultPath(catchNode.expectObjectNode()));
+        }
+        return objectNode.withMember("Catch", result);
+    }
+
+    public static ObjectNode withInputPathOutputPath(ObjectNode objectNode) {
+        if (objectNode.containsMember("InputPath")) {
+            ObjectNode memberNode = objectNode.expectObjectMember("InputPath");
+            if (memberNode.containsMember("path")) {
+                objectNode = objectNode.withMember("InputPath", memberNode.expectStringMember("path"));
+            } else if (memberNode.containsMember("null")) {
+                objectNode = objectNode.withMember("InputPath",
+                        new NullNode(memberNode.expectBooleanMember("null").getSourceLocation()));
+            }
+        }
+        if (objectNode.containsMember("OutputPath")) {
+            ObjectNode memberNode = objectNode.expectObjectMember("OutputPath");
+            if (memberNode.containsMember("path")) {
+                objectNode = objectNode.withMember("OutputPath", memberNode.expectStringMember("path"));
+            } else if (memberNode.containsMember("null")) {
+                objectNode = objectNode.withMember("OutputPath",
+                        new NullNode(memberNode.expectBooleanMember("null").getSourceLocation()));
+            }
+        }
+        return objectNode;
+    }
+
+    public static ObjectNode withResultPath(ObjectNode objectNode) {
+        if (objectNode.containsMember("ResultPath")) {
+            ObjectNode memberNode = objectNode.expectObjectMember("ResultPath");
+            if (memberNode.containsMember("path")) {
+                objectNode = objectNode.withMember("ResultPath", memberNode.expectStringMember("path"));
+            } else if (memberNode.containsMember("null")) {
+                objectNode = objectNode.withMember("ResultPath",
+                        new NullNode(memberNode.expectBooleanMember("null").getSourceLocation()));
+            }
+        }
+        return objectNode;
     }
 
     private static ArrayNode withUppercaseFirstLetterObjectMembers(ArrayNode arrayNode) {

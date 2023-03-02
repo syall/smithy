@@ -6,6 +6,6 @@ namespace smithy.stateslanguage
 @stateDefinition
 structure succeedState {
     comment: String
-    inputPath: StatePath
-    outputPath: StatePath
+    inputPath: StatePathOrNull
+    outputPath: StatePathOrNull
 }

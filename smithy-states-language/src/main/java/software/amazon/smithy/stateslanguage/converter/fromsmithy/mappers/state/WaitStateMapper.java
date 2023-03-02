@@ -18,6 +18,7 @@ public class WaitStateMapper implements StateMapper {
             return objectNode;
         }
         objectNode = MapperUtils.withStateType("Wait", objectNode);
+        objectNode = MapperUtils.withInputPathOutputPath(objectNode);
         objectNode = MapperUtils.withNextOrEnd(objectNode);
         objectNode = MapperUtils.withMemberOrStatePath("Seconds", objectNode);
         objectNode = MapperUtils.withMemberOrStatePath("Timestamp", objectNode);

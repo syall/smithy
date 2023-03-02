@@ -14,8 +14,8 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#choiceState)
 @smithy.stateslanguage#choiceState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { null: true }
     choices: [
         {
             booleanExpression: {

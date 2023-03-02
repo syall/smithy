@@ -6,8 +6,8 @@ namespace smithy.stateslanguage
 @stateDefinition
 structure waitState {
     comment: String
-    inputPath: StatePath
-    outputPath: StatePath
+    inputPath: StatePathOrNull
+    outputPath: StatePathOrNull
     @required
     nextOrEnd: StateNextOrEnd
     // State-specific

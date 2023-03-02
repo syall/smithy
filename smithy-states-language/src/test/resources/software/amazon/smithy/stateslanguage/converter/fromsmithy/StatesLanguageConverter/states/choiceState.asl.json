@@ -4,7 +4,7 @@
         "State": {
             "Comment": "COMMENT",
             "InputPath": "$",
-            "OutputPath": "$",
+            "OutputPath": null,
             "Choices": [
                 {
                     "Next": "NextState",

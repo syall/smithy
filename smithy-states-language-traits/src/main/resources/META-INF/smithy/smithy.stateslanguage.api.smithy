@@ -49,6 +49,11 @@ string StateName
 
 string StatePath
 
+union StatePathOrNull {
+    path: StatePath
+    null: Boolean
+}
+
 union StateNextOrEnd {
     next: StateName
     end: Boolean

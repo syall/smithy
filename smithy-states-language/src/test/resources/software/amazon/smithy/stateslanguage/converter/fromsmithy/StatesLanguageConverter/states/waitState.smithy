@@ -14,8 +14,8 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#waitState)
 @smithy.stateslanguage#waitState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { path: "$" }
     nextOrEnd: { next: "NextState" }
     seconds: { value: 1 }
     timestamp: { value: "2023-03-01T09:16:04Z" }
@@ -25,6 +25,8 @@ structure TestState {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#waitState)
 @smithy.stateslanguage#waitState(
     nextOrEnd: { end: true }
+    inputPath: { null: true }
+    outputPath: { null: true }
     seconds: { path: "$" }
     timestamp: { path: "$" }
 )

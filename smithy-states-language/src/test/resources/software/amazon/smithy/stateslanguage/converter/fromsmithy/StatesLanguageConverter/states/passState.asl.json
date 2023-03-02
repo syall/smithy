@@ -19,7 +19,10 @@
         },
         "NextState": {
             "Type": "Pass",
-            "End": true
+            "InputPath": null,
+            "OutputPath": null,
+            "End": true,
+            "ResultPath": null
         }
     }
 }

@@ -14,10 +14,10 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#mapState)
 @smithy.stateslanguage#mapState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { path: "$" }
     nextOrEnd: { next: "NextState" }
-    resultPath: "$"
+    resultPath: { path: "$" }
     parameters: {
         x: 3
         y: 2
@@ -41,7 +41,7 @@ structure TestStateMachine {}
                 "States.ALL"
             ]
             next: "NextTestState"
-            resultPath: "$"
+            resultPath: { path: "$" }
         }
     ]
     itemProcessor: {
@@ -86,7 +86,10 @@ structure TestState {}
 
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#mapState)
 @smithy.stateslanguage#mapState(
+    inputPath: { null: true }
+    outputPath: { null: true }
     nextOrEnd: { end: true }
+    resultPath: { null: true }
     itemProcessor: {
         stateMachine: TestMappedStateMachine
         processorConfig: {

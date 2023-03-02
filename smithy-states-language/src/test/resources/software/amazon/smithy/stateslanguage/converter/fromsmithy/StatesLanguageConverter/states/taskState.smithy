@@ -14,10 +14,10 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#taskState)
 @smithy.stateslanguage#taskState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { path: "$" }
     nextOrEnd: { next: "NextState" }
-    resultPath: "$"
+    resultPath: { path: "$" }
     parameters: {
         x: 3
         y: 2
@@ -41,7 +41,7 @@ structure TestStateMachine {}
                 "States.ALL"
             ]
             next: "NextTestState"
-            resultPath: "$"
+            resultPath: { path: "$" }
         }
     ]
     resource: "www.amazon.com"
@@ -55,6 +55,9 @@ structure TestState {}
 
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#taskState)
 @smithy.stateslanguage#taskState(
+    inputPath: { null: true }
+    outputPath: { null: true }
+    resultPath: { null: true }
     nextOrEnd: { end: true }
     resource: "www.aws.com"
     timeoutSeconds: { path: "$" }

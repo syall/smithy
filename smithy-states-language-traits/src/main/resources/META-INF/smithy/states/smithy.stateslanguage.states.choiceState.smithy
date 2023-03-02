@@ -6,8 +6,8 @@ namespace smithy.stateslanguage
 @stateDefinition
 structure choiceState {
     comment: String
-    inputPath: StatePath
-    outputPath: StatePath
+    inputPath: StatePathOrNull
+    outputPath: StatePathOrNull
     // State-specific
     choices: StateChoiceRuleWithNextList
     default: StateName

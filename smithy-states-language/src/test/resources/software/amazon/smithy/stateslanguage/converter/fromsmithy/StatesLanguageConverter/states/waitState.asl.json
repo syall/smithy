@@ -12,6 +12,8 @@
         },
         "NextState": {
             "Type": "Wait",
+            "InputPath": null,
+            "OutputPath": null,
             "End": true,
             "SecondsPath": "$",
             "TimestampPath": "$"

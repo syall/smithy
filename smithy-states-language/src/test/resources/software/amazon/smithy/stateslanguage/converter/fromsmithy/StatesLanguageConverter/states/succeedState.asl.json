@@ -5,7 +5,7 @@
             "Type": "Succeed",
             "Comment": "COMMENT",
             "InputPath": "$",
-            "OutputPath": "$"
+            "OutputPath": null
         }
     }
 }

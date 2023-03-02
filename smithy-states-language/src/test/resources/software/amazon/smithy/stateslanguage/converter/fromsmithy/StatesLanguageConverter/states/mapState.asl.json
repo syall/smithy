@@ -79,7 +79,10 @@
         },
         "NextState": {
             "Type": "Map",
+            "InputPath": null,
+            "OutputPath": null,
             "End": true,
+            "ResultPath": null,
             "ItemProcessor": {
                 "States": {
                     "TerminalState": {

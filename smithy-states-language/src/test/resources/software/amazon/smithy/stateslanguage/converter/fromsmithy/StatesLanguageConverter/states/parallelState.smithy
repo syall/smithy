@@ -14,10 +14,10 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#parallelState)
 @smithy.stateslanguage#parallelState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { path: "$" }
     nextOrEnd: { next: "NextState" }
-    resultPath: "$"
+    resultPath: { path: "$" }
     parameters: {
         x: 3
         y: 2
@@ -41,7 +41,7 @@ structure TestStateMachine {}
                 "States.ALL"
             ]
             next: "NextTestState"
-            resultPath: "$"
+            resultPath: { path: "$" }
         }
     ]
     branches: [

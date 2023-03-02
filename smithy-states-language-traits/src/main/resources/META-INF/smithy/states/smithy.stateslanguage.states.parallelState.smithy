@@ -6,11 +6,11 @@ namespace smithy.stateslanguage
 @stateDefinition
 structure parallelState {
     comment: String
-    inputPath: StatePath
-    outputPath: StatePath
+    inputPath: StatePathOrNull
+    outputPath: StatePathOrNull
     @required
     nextOrEnd: StateNextOrEnd
-    resultPath: StatePath
+    resultPath: StatePathOrNull
     resultSelector: StatePayloadTemplate
     parameters: StatePayloadTemplate
     retry: StateRetry

@@ -18,7 +18,9 @@ public class PassStateMapper implements StateMapper {
             return objectNode;
         }
         objectNode = MapperUtils.withStateType("Pass", objectNode);
+        objectNode = MapperUtils.withInputPathOutputPath(objectNode);
         objectNode = MapperUtils.withNextOrEnd(objectNode);
+        objectNode = MapperUtils.withResultPath(objectNode);
         return objectNode;
     }
 }

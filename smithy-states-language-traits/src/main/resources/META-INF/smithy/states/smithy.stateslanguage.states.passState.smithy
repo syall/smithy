@@ -8,9 +8,9 @@ structure passState {
     comment: String
     @required
     nextOrEnd: StateNextOrEnd
-    inputPath: StatePath
-    outputPath: StatePath
-    resultPath: StatePath
+    inputPath: StatePathOrNull
+    outputPath: StatePathOrNull
+    resultPath: StatePathOrNull
     parameters: StatePayloadTemplate
     // State-specific
     result: StatePayloadTemplate

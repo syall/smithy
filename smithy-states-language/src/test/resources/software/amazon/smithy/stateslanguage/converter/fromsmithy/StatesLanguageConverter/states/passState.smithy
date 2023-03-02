@@ -14,10 +14,10 @@ structure TestStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#passState)
 @smithy.stateslanguage#passState(
     comment: "COMMENT"
-    inputPath: "$"
-    outputPath: "$"
+    inputPath: { path: "$" }
+    outputPath: { path: "$" }
     nextOrEnd: { next: "NextState" }
-    resultPath: "$"
+    resultPath: { path: "$" }
     parameters: {
         "x": 3
         "y": 2
@@ -31,6 +31,9 @@ structure TestState {}
 
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#passState)
 @smithy.stateslanguage#passState(
+    inputPath: { null: true }
+    outputPath: { null: true }
     nextOrEnd: { end: true }
+    resultPath: { null: true }
 )
 structure NextTestState {}

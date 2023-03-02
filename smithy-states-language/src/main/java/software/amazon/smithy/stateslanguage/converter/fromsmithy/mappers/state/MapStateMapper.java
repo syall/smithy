@@ -22,7 +22,9 @@ public class MapStateMapper implements StateMapper {
             return objectNode;
         }
         objectNode = MapperUtils.withStateType("Map", objectNode);
+        objectNode = MapperUtils.withInputPathOutputPath(objectNode);
         objectNode = MapperUtils.withNextOrEnd(objectNode);
+        objectNode = MapperUtils.withResultPath(objectNode);
         objectNode = MapperUtils.withRetry(objectNode);
         objectNode = MapperUtils.withCatch(objectNode);
         objectNode = handleItemProcessor(objectNode, context);

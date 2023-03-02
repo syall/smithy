@@ -20,7 +20,7 @@ structure RunMultipleQueriesStateMachine {}
 @smithy.stateslanguage#state(definition: smithy.stateslanguage#taskState)
 @smithy.stateslanguage#taskState(
     resource: "arn:aws:states:::lambda:invoke"
-    outputPath: "$.Payload"
+    outputPath: { path: "$.Payload" }
     parameters: {
         "FunctionName": "<ATHENA_FUNCTION_NAME>"
     }

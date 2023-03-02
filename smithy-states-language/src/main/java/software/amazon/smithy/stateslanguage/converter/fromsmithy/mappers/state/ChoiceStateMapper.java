@@ -22,6 +22,7 @@ public class ChoiceStateMapper implements StateMapper {
             return objectNode;
         }
         objectNode = MapperUtils.withStateType("Choice", objectNode);
+        objectNode = MapperUtils.withInputPathOutputPath(objectNode);
         ArrayNode newChoicesNode = handleStateChoiceRuleList("Choices", objectNode);
         return objectNode.withMember("Choices", newChoicesNode);
     }

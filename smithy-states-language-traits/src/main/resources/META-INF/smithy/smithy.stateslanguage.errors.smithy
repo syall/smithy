@@ -23,7 +23,7 @@ structure StateCatcher {
     errorEquals: StateErrorList
     @required
     next: StateName
-    resultPath: StatePath
+    resultPath: StatePathOrNull
 }
 
 @length(min: 1)

@@ -6,11 +6,11 @@ namespace smithy.stateslanguage
 @stateDefinition
 structure taskState {
     comment: String
-    inputPath: StatePath
-    outputPath: StatePath
+    inputPath: StatePathOrNull
+    outputPath: StatePathOrNull
     @required
     nextOrEnd: StateNextOrEnd
-    resultPath: StatePath
+    resultPath: StatePathOrNull
     parameters: StatePayloadTemplate
     resultSelector: StatePayloadTemplate
     retry: StateRetry

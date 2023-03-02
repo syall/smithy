@@ -42,9 +42,12 @@
             "HeartbeatSeconds": 1
         },
         "NextState": {
-            "Resource": "www.aws.com",
             "Type": "Task",
+            "InputPath": null,
+            "OutputPath": null,
             "End": true,
+            "ResultPath": null,
+            "Resource": "www.aws.com",
             "TimeoutSecondsPath": "$",
             "HeartbeatSecondsPath": "$"
         }
