@@ -9,6 +9,7 @@ import java.util.Optional;
 import software.amazon.smithy.model.node.Node;
 import software.amazon.smithy.model.node.ObjectNode;
 import software.amazon.smithy.model.node.StringNode;
+import software.amazon.smithy.stateslanguage.converter.StatesLanguageException;
 
 public final class MapperUtils {
     private MapperUtils() {
@@ -16,6 +17,39 @@ public final class MapperUtils {
 
     public static ObjectNode withStateType(String stateType, ObjectNode objectNode) {
         return objectNode.withMember("Type", stateType);
+    }
+
+    public static ObjectNode withNextOrEnd(ObjectNode objectNode) {
+        if (!objectNode.containsMember("NextOrEnd")) {
+            throw new StatesLanguageException(
+                "Expected `nextOrEnd` on in node: `" + Node.prettyPrintJson(objectNode) + "`");
+        }
+        ObjectNode nextOrEndNode = objectNode.expectObjectMember("NextOrEnd");
+        objectNode = objectNode.withoutMember("NextOrEnd");
+        if (nextOrEndNode.containsMember("next")) {
+            return objectNode.withMember("Next", nextOrEndNode.expectStringMember("next"));
+        } else if (nextOrEndNode.containsMember("end")) {
+            return objectNode.withMember("End", nextOrEndNode.expectBooleanMember("end"));
+        }
+        throw new StatesLanguageException(
+            "Expected `next` or `end` on in `nextOrEnd`: `" + Node.prettyPrintJson(nextOrEndNode) + "`");
+    }
+
+    public static ObjectNode withMemberOrStatePath(String memberName, ObjectNode objectNode) {
+        if (!objectNode.containsMember(memberName)) {
+            return objectNode;
+        }
+        String memberNamePath = memberName + "Path";
+        ObjectNode memberNode = objectNode.expectObjectMember(memberName);
+        objectNode = objectNode.withoutMember(memberName);
+        if (memberNode.containsMember("value")) {
+            return objectNode.withMember(memberName, memberNode.expectMember("value"));
+        } else if (memberNode.containsMember("path")) {
+            return objectNode.withMember(memberNamePath, memberNode.expectMember("path"));
+        }
+        throw new StatesLanguageException(
+            "Expected `value` or `path` on in `" + memberName +  "`: `"
+            + Node.prettyPrintJson(memberNode) + "`");
     }
 
     public static ObjectNode uppercaseFirstLetterMembers(ObjectNode objectNode) {
